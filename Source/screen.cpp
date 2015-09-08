@@ -1,146 +1,135 @@
 /**********************************************************************************************************************************************************************/
 #include "screen.h"
-#include "map.h"
-#include "config.h"
-#include "globals.h"
 #include "image_error.xpm"
 /**********************************************************************************************************************************************************************/
 /* TODO (GamerMan7799#5#): Get better images for the game. (Currently just using placeholders)
                            Consider hiring someone? */
 /**********************************************************************************************************************************************************************/
 clsScreen::clsScreen() {
-    if (Global::Cnfg.getvalues(cnfgShowMap) == 1) { //if not showing the map don't bother trying to load any of the images
-                                                    //useful so if show map is disabled you don't need the images folder.
-        //Figure out screen size
-        if (Global::Cnfg.getvalues(cnfgScreenWidth) == 0) {width = 35*pic_size;}
-        else {width = Global::Cnfg.getvalues(cnfgScreenWidth);}
-        if (Global::Cnfg.getvalues(cnfgScreenHeight) == 0) {height = DEFINED_MAP_HEIGHT*pic_size;}
-        else {height = Global::Cnfg.getvalues(cnfgScreenHeight);}
+    //Figure out screen size
+    width = 35*pic_size;
+    height = DEFINED_MAP_HEIGHT*pic_size;
 
-        //Set all the booleans to false
-        blnloaded.blnWindow = false;
-        blnloaded.blnRenderer = false;
-        blnloaded.blnSky = blnloaded.blnPlayer = blnloaded.blnMonster = blnloaded.blnWall = blnloaded.blnPole = blnloaded.blnCoin = blnloaded.blnErrortex = false;
-        bln_SDL_started = false;
+    //Set all the booleans to false
+    blnloaded.blnWindow = false;
+    blnloaded.blnRenderer = false;
+    blnloaded.blnSky = blnloaded.blnPlayer = blnloaded.blnMonster = blnloaded.blnWall = blnloaded.blnPole = blnloaded.blnCoin = blnloaded.blnErrortex = false;
+    bln_SDL_started = false;
 
-        //Start SDL
-        if (SDL_Init(SDL_INIT_VIDEO) != 0) {
-            error();
-            return;
-        } else {
-            bln_SDL_started = true;
-            if (Global::blnDebugMode) {printf("SDL init successful\n");}
-        }
+    //Start SDL
+    if (SDL_Init(SDL_INIT_VIDEO) != 0) {
+        error();
+        return;
+    } else {
+        bln_SDL_started = true;
+        if (Global::blnDebugMode) {printf("SDL init successful\n");}
+    }
 
-        //Start TTF
-        if (TTF_Init() != 0) {
-            error();
-            return;
-        } else {
-            if (Global::blnDebugMode) {printf("TTF init successful\n");}
-        }
+    //Start TTF
+    if (TTF_Init() != 0) {
+        error();
+        return;
+    } else {
+        if (Global::blnDebugMode) {printf("TTF init successful\n");}
+    }
 
-        //Start Image (with only png)
-        if (!(IMG_Init( IMG_INIT_PNG )) & IMG_INIT_PNG) {
-            error();
-            return;
-        } else {
-            if (Global::blnDebugMode) {printf("IMG init successful\n");}
-        }
+    //Start Image (with only png)
+    if (!(IMG_Init( IMG_INIT_PNG )) & IMG_INIT_PNG) {
+        error();
+        return;
+    } else {
+        if (Global::blnDebugMode) {printf("IMG init successful\n");}
+    }
 
-        win = SDL_CreateWindow("Experimental Platformer AI",100, 100, width, height, SDL_WINDOW_SHOWN);
-        if (win == nullptr) {
-            printf("SDL Failed to create window.\n");
-            error();
-            return;
-        } else {
-            blnloaded.blnWindow = true;
-            if (Global::blnDebugMode) {printf("Window creation successful\n");}
-        }
+    win = SDL_CreateWindow("Map Maker",100, 100, width, height, SDL_WINDOW_SHOWN);
+    if (win == nullptr) {
+        printf("SDL Failed to create window.\n");
+        error();
+        return;
+    } else {
+        blnloaded.blnWindow = true;
+        if (Global::blnDebugMode) {printf("Window creation successful\n");}
+    }
 
-        ren = SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED);
-        if (ren == nullptr) {
-            printf("SDL Failed to create renderer.\n");
-            error();
-            return;
-        } else {
-            blnloaded.blnRenderer = true;
-            if (Global::blnDebugMode) {printf("Renderer creation successful\n");}
-        }
+    ren = SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED);
+    if (ren == nullptr) {
+        printf("SDL Failed to create renderer.\n");
+        error();
+        return;
+    } else {
+        blnloaded.blnRenderer = true;
+        if (Global::blnDebugMode) {printf("Renderer creation successful\n");}
+    }
 
-        textures.errortex = loadERROR();
-        if (bln_SDL_started == false) {return;}
-        else {
-            blnloaded.blnErrortex = true;
-            if (Global::blnDebugMode) {printf("Error loading successful\n");}
-        }
+    textures.errortex = loadERROR();
+    if (bln_SDL_started == false) {return;}
+    else {
+        blnloaded.blnErrortex = true;
+        if (Global::blnDebugMode) {printf("Error loading successful\n");}
+    }
 
-        std::string path = DEFINED_DEFAULT_IMAGE_PATH;
-        path += "sky.png";
-        textures.sky = loadIMG(path);
-        blnloaded.blnSky = true;
-        if (Global::blnDebugMode) {printf("Sky loading successful\n");}
+    std::string path = DEFINED_DEFAULT_IMAGE_PATH;
+    path += "sky.png";
+    textures.sky = loadIMG(path);
+    blnloaded.blnSky = true;
+    if (Global::blnDebugMode) {printf("Sky loading successful\n");}
 
-        path = DEFINED_DEFAULT_IMAGE_PATH;
-        path += "player.png";
-        textures.player = loadIMG(path);
-        blnloaded.blnPlayer = true;
-        if (Global::blnDebugMode) {printf("Player loading successful\n");}
+    path = DEFINED_DEFAULT_IMAGE_PATH;
+    path += "player.png";
+    textures.player = loadIMG(path);
+    blnloaded.blnPlayer = true;
+    if (Global::blnDebugMode) {printf("Player loading successful\n");}
 
 
-        path = DEFINED_DEFAULT_IMAGE_PATH;
-        path += "wall.png";
-        textures.wall = loadIMG(path);
-        blnloaded.blnWall = true;
-        if (Global::blnDebugMode) {printf("Wall loading successful\n");}
+    path = DEFINED_DEFAULT_IMAGE_PATH;
+    path += "wall.png";
+    textures.wall = loadIMG(path);
+    blnloaded.blnWall = true;
+    if (Global::blnDebugMode) {printf("Wall loading successful\n");}
 
 
-        path = DEFINED_DEFAULT_IMAGE_PATH;
-        path += "coin.png";
-        textures.coin = loadIMG(path);
-        blnloaded.blnCoin = true;
-        if (Global::blnDebugMode) {printf("Coin loading successful\n");}
+    path = DEFINED_DEFAULT_IMAGE_PATH;
+    path += "coin.png";
+    textures.coin = loadIMG(path);
+    blnloaded.blnCoin = true;
+    if (Global::blnDebugMode) {printf("Coin loading successful\n");}
 
-        path = DEFINED_DEFAULT_IMAGE_PATH;
-        path += "pole.png";
-        textures.pole = loadIMG(path);
-        blnloaded.blnPole = true;
-        if (Global::blnDebugMode) {printf("Pole loading successful\n");}
+    path = DEFINED_DEFAULT_IMAGE_PATH;
+    path += "pole.png";
+    textures.pole = loadIMG(path);
+    blnloaded.blnPole = true;
+    if (Global::blnDebugMode) {printf("Pole loading successful\n");}
 
-        path = DEFINED_DEFAULT_IMAGE_PATH;
-        path += "monster.png";
-        textures.monster = loadIMG(path);
-        blnloaded.blnMonster = true;
-        if (Global::blnDebugMode) {printf("Monster loading successful\n");}
+    path = DEFINED_DEFAULT_IMAGE_PATH;
+    path += "monster.png";
+    textures.monster = loadIMG(path);
+    blnloaded.blnMonster = true;
+    if (Global::blnDebugMode) {printf("Monster loading successful\n");}
 
-        MessageFont = TTF_OpenFont(DEFINED_MESSAGE_FONT,16); //Opens font and sets size
-        if (MessageFont == nullptr) {
-            printf("Font failed to load, messages will not appear.");
-            blnloaded.blnMessageFont = false;
-        } else {
-            if(Global::blnDebugMode) {printf("Message font created\n");}
-           blnloaded.blnMessageFont = true;
-        }
+    MessageFont = TTF_OpenFont(DEFINED_MESSAGE_FONT,16); //Opens font and sets size
+    if (MessageFont == nullptr) {
+        printf("Font failed to load, messages will not appear.");
+        blnloaded.blnMessageFont = false;
+    } else {
+        if(Global::blnDebugMode) {printf("Message font created\n");}
+       blnloaded.blnMessageFont = true;
+    }
 
-        colors.Black = {0, 0, 0, 0}; //Make the color black for fonts
-        colors.White = {255, 255, 255, 0}; //Make the color white for fonts
+    colors.Black = {0, 0, 0, 0}; //Make the color black for fonts
+    colors.White = {255, 255, 255, 0}; //Make the color white for fonts
 
-        update();
-    } //end if blnShowMap
+    update();
 }
 /**********************************************************************************************************************************************************************/
 clsScreen::~clsScreen() {
-    if (Global::Cnfg.getvalues(cnfgShowMap) == 1) { //if nothing was really loaded then don't need to clean anything up
-        cleanup();
-        TTF_Quit();
-        IMG_Quit();
-        SDL_Quit();
-        if (Global::blnDebugMode) {printf("SDL quit\n");}
-    } //end if show map
+    cleanup();
+    TTF_Quit();
+    IMG_Quit();
+    SDL_Quit();
+    if (Global::blnDebugMode) {printf("SDL quit\n");}
 }
 /**********************************************************************************************************************************************************************/
 void clsScreen::update(void) {
-    PLYR tempPlayer = Global::Enty.getPlayer();
     uint Max_Height, Max_Width; //Values for how far on the map the screen should render
     uint x_start; //place where x starts at
     Max_Height = (uint) (height/pic_size);
@@ -201,7 +190,6 @@ void clsScreen::update(void) {
     }
     //show renderer
     SDL_RenderPresent(ren);
-    Global::Tick.wait();
 }
 /**********************************************************************************************************************************************************************/
 void clsScreen::cleanup(void) {

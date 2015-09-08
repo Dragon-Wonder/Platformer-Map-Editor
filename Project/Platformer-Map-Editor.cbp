@@ -5,38 +5,68 @@
 		<Option title="Platformer-Map-Editor" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
+		<Option show_notes="0">
+		</Option>
 		<Build>
 			<Target title="Debug">
-				<Option output="../Platformer-Map-Editor" prefix_auto="1" extension_auto="1" />
+				<Option output="../MapMaker-PRIVATE" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="../" />
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
+					<Add option="-Wextra" />
+					<Add option="-Wall" />
+					<Add option="-pg" />
 					<Add option="-g" />
+					<Add option="-DDEFINED_BUILD_MODE_PRIVATE" />
 				</Compiler>
+				<Linker>
+					<Add option="-pg" />
+				</Linker>
+				<Environment>
+					<Variable name="BUILD_MODE" value="-DDEFINED_BUILD_MODE_PRIVATE" />
+				</Environment>
 			</Target>
 			<Target title="Release">
-				<Option output="../Platformer-Map-Editor" prefix_auto="1" extension_auto="1" />
+				<Option output="../MapMaker" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="../" />
 				<Option object_output="obj/Release/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
-					<Add option="-O2" />
+					<Add option="-O3" />
+					<Add option="-w" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
 				</Linker>
+				<Environment>
+					<Variable name="BUILD_MODE" value="" />
+				</Environment>
 			</Target>
 		</Build>
 		<Compiler>
-			<Add option="-Wall" />
+			<Add option="-std=c++11" />
+			<Add directory="../SDL2Stuff/include" />
 		</Compiler>
+		<Linker>
+			<Add library="mingw32" />
+			<Add library="SDL2main" />
+			<Add library="SDL2" />
+			<Add library="SDL2_ttf" />
+			<Add library="SDL2_image" />
+			<Add directory="../SDL2Stuff/lib" />
+		</Linker>
 		<Unit filename="../Resources/boilerplate.rc">
 			<Option compilerVar="WINDRES" />
+			<Option weight="96" />
+			<Option compiler="gcc" use="1" buildCommand="$rescomp $file $(BUILD_MODE) -O coff $resource_output" />
 		</Unit>
 		<Unit filename="../Source/image_error.xpm" />
-		<Unit filename="../Source/main.cpp" />
-		<Unit filename="../Source/main.h" />
+		<Unit filename="../Source/main.cpp">
+			<Option weight="0" />
+		</Unit>
 		<Unit filename="../Source/screen.cpp" />
 		<Unit filename="../Source/screen.h" />
 		<Unit filename="../Source/version.h" />
@@ -44,7 +74,6 @@
 			<code_completion />
 			<envvars />
 			<debugger />
-			<lib_finder disable_auto="1" />
 		</Extensions>
 	</Project>
 </CodeBlocks_project_file>
