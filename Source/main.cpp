@@ -5,7 +5,9 @@
 #include "main.h"
 #include "version.h"
 #include "button.h"
-#include "image_error.xpm"
+/**********************************************************************************************************************************************/
+#include "image_tiles.xpm"
+#include "image_toolbox_frame.xpm"
 /**********************************************************************************************************************************************/
 //Globals (in all files)
 namespace Global {
@@ -16,7 +18,7 @@ namespace Global {
     #else
         const bool blnDebugMode = true;
     #endif // DEFINED_BUILD_MODE_PRIVATE
-    SDL_Rect clips[6];
+    SDL_Rect clips[8];
     const uint pic_size = 24;
     uchar map[14][217] = {{1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
                         {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -32,23 +34,34 @@ namespace Global {
                         {1,1,1,1,1,2,0,0,0,0,0,0,0,1,1,1,1,1,1,0,0,0,4,0,0,1,1,1,1,0,0,0,0,0,0,0,4,0,0,0,0,1,1,0,1,1,1,1,0,1,1,1,1,1,1,1,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,1,1,1,1,1,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1,0,0,3,0,0,0,1,1,1,1,1,1,0,0,0},
                         {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
                         {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}};
+    BRUSH paintbrush;
+    WINDATT window;
+    TEX textures;
 };
 /**********************************************************************************************************************************************/
 //Globals in this file.
 Loaded blnload;
-TEX textures;
 clrs colors;
-WINDATT window;
 bool bln_SDL_Started;
 /**********************************************************************************************************************************************/
 int main(int argc, char *argv[]) {
+    bool quit = false;
+    SDL_Event event;
+
     set_clips();
     start_screen();
     if (bln_SDL_Started == false) {return 1;}
 
+    while ( quit == false) {
+        show_screen();
+        if (SDL_PollEvent( &event ) ) {
+            check_events();
+            if (event.type == SDL_QUIT) {quit = true;}
+        }
+    }
 
-
-
+    cleanup();
+    write_map();
 	return 0;
 }
 /**********************************************************************************************************************************************/
@@ -85,57 +98,70 @@ void set_clips() {
     Global::clips[tilePole].h = Global::pic_size;
     Global::clips[tilePole].w = Global::pic_size;
 
+    Global::clips[tileFrame].x = 3 * Global::pic_size;
+    Global::clips[tileFrame].y = 0 *Global::pic_size;
+    Global::clips[tileFrame].h = Global::pic_size;
+    Global::clips[tileFrame].w = Global::pic_size;
+
+    Global::clips[tileError].x = 3 * Global::pic_size;
+    Global::clips[tileError].y = 1 * Global::pic_size;
+    Global::clips[tileError].h = Global::pic_size;
+    Global::clips[tileError].w = Global::pic_size;
+
     if (Global::blnDebugMode) {printf("Global::clips made.\n");}
 }
 /**********************************************************************************************************************************************/
 void load_textures() {
-    SDL_Surface* temp = IMG_ReadXPMFromArray(image_error_xpm);
+    //Load tiles
+    SDL_Surface* temp = IMG_ReadXPMFromArray(image_tiles_xpm);
 
     if (temp == nullptr) {
-        printf("Failed to load embedded image.\n");
+        printf("Failed to load embedded images.\n");
         error();
         return;
 	} else {
 	    if (Global::blnDebugMode) {printf("Error surface created.\n");}
     }
 
-	textures.errortex = SDL_CreateTextureFromSurface(window.ren,temp);
-	if (textures.errortex == nullptr) {
+	Global::textures.tilemap = SDL_CreateTextureFromSurface(Global::window.ren,temp);
+	if (Global::textures.tilemap == nullptr) {
         printf("Failed to create texture.\n");
         error();
         return;
 	} else {
 	    if (Global::blnDebugMode) {printf("Surface to texture successful\n");}
+	    blnload.blnTiles = true;
     }
 
-    std::string path = DEFINED_DEFAULT_IMAGE_PATH;
-    path += "Tiles.png";
 
-    temp = IMG_Load(path.c_str());
+    //Load toolbox frame
+    temp = IMG_ReadXPMFromArray(image_toolbox_frame_xpm);
 
     if (temp == nullptr) {
-        printf("Failed to load img.\n");
+        printf("Failed to load embedded images.\n");
         error();
         return;
-    } else {
-        if (Global::blnDebugMode) {printf("img to surface successful\n");}
+	} else {
+	    if (Global::blnDebugMode) {printf("Error surface created.\n");}
     }
 
-    textures.tilemap = SDL_CreateTextureFromSurface(window.ren,temp);
-	SDL_FreeSurface(temp);
-	if (textures.tilemap == nullptr) {
+	Global::textures.toolboxframe = SDL_CreateTextureFromSurface(Global::window.ren,temp);
+	if (Global::textures.toolboxframe == nullptr) {
         printf("Failed to create texture.\n");
         error();
         return;
 	} else {
 	    if (Global::blnDebugMode) {printf("Surface to texture successful\n");}
+	    blnload.blnToolboxFrame = true;
     }
+
+    SDL_FreeSurface(temp);
 }
 /**********************************************************************************************************************************************/
 void start_screen() {
-    window.width = 35*Global::pic_size;
-    window.height = 14*Global::pic_size;
-    blnload.blnErrortex = blnload.blnMessage = blnload.blnMessageFont = blnload.blnTiles = false;
+    Global::window.width = 35*Global::pic_size;
+    Global::window.height = 14*Global::pic_size;
+    blnload.blnMessage = blnload.blnMessageFont = blnload.blnTiles = blnload.blnToolboxFrame = false;
     blnload.blnWindow = blnload.blnRenderer = bln_SDL_Started = false;
 
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
@@ -162,8 +188,8 @@ void start_screen() {
         if (Global::blnDebugMode) {printf("IMG init successful\n");}
     }
 
-    window.MessageFont = TTF_OpenFont(DEFINED_MESSAGE_FONT,16); //Opens font and sets size
-    if ( window.MessageFont == nullptr) {
+    Global::window.MessageFont = TTF_OpenFont(DEFINED_MESSAGE_FONT,16); //Opens font and sets size
+    if ( Global::window.MessageFont == nullptr) {
         printf("Font failed to load, messages will not appear.");
         blnload.blnMessageFont = false;
     } else {
@@ -171,9 +197,9 @@ void start_screen() {
        blnload.blnMessageFont = true;
     }
 
-    window.win = SDL_CreateWindow("Map Maker", 100, 100, window.width, window.height, SDL_WINDOW_SHOWN);
-    if (window.win == nullptr) {
-        printf("SDL Failed to create window.\n");
+    Global::window.win = SDL_CreateWindow("Map Maker", 100, 100, Global::window.width, Global::window.height, SDL_WINDOW_SHOWN);
+    if (Global::window.win == nullptr) {
+        printf("SDL Failed to create Global::window.\n");
         error();
         return;
     } else {
@@ -181,8 +207,8 @@ void start_screen() {
         if (Global::blnDebugMode) {printf("Window creation successful\n");}
     }
 
-    window.ren = SDL_CreateRenderer(window.win, -1, SDL_RENDERER_ACCELERATED);
-    if (window.ren == nullptr) {
+    Global::window.ren = SDL_CreateRenderer(Global::window.win, -1, SDL_RENDERER_ACCELERATED);
+    if (Global::window.ren == nullptr) {
         printf("SDL Failed to create renderer.\n");
         error();
         return;
@@ -200,38 +226,38 @@ void start_screen() {
 }
 /**********************************************************************************************************************************************/
 void cleanup() {
-    if (blnload.blnErrortex) {
-        SDL_DestroyTexture(textures.errortex);
-        blnload.blnErrortex = false;
-        if(Global::blnDebugMode) {printf("Error texture destroyed.\n");}
-    }
-
     if (blnload.blnMessage) {
-        SDL_DestroyTexture(textures.texmessage);
+        SDL_DestroyTexture(Global::textures.texmessage);
         blnload.blnMessage = false;
         if(Global::blnDebugMode) {printf("Message texture destroyed.\n");}
     }
 
     if (blnload.blnTiles) {
-        SDL_DestroyTexture(textures.tilemap);
+        SDL_DestroyTexture(Global::textures.tilemap);
         blnload.blnTiles = false;
         if(Global::blnDebugMode) {printf("Map tile texture destroyed.\n");}
     }
 
+    if (blnload.blnToolboxFrame) {
+        SDL_DestroyTexture(Global::textures.toolboxframe);
+        blnload.blnToolboxFrame = false;
+        if(Global::blnDebugMode) {printf("Map tile texture destroyed.\n");}
+    }
+
     if (blnload.blnMessageFont) {
-        TTF_CloseFont(window.MessageFont);
+        TTF_CloseFont(Global::window.MessageFont);
         blnload.blnMessageFont = false;
         if(Global::blnDebugMode) {printf("Message font destroyed.\n");}
     }
 
     if (blnload.blnRenderer) {
-        SDL_DestroyRenderer(window.ren);
+        SDL_DestroyRenderer(Global::window.ren);
         blnload.blnRenderer = false;
         if (Global::blnDebugMode) {printf("Renderer destroyed\n");}
     }
 
 	if (blnload.blnWindow) {
-        SDL_DestroyWindow(window.win);
+        SDL_DestroyWindow(Global::window.win);
         blnload.blnWindow = false;
         if (Global::blnDebugMode) {printf("Window destroyed\n");}
     }
@@ -253,22 +279,55 @@ void error() {
 /**********************************************************************************************************************************************/
 void show_screen() {
     //Clear renderer
-    SDL_RenderClear(window.ren);
+    SDL_RenderClear(Global::window.ren);
     //copy sky to cover entire screen.
-    SDL_RenderCopy(window.ren, textures.tilemap, &Global::clips[tileSpace], NULL);
+    SDL_RenderCopy(Global::window.ren, Global::textures.tilemap, &Global::clips[tileSpace], NULL);
     SDL_Rect dst;
     for (uint y = 0; (y < 14); y++) {
-        for (uint x=0; (x < 35); x++) {
+        for (uint x = 0; (x < 217); x++) {
             //update where we're trying to put the texture.
             dst.x = x * Global::pic_size;
             dst.y = y * Global::pic_size;
             dst.h = Global::pic_size;
             dst.w = Global::pic_size;
 
-            SDL_RenderCopy(window.ren, textures.tilemap, &Global::clips[Global::map[y][x]], &dst);
+            switch (Global::map[y][x]) { //Use this to make sure we aren't try to load a non-existing part
+            case tileCoin:
+            case tileMonster:
+            case tilePlayer:
+            case tilePole:
+            case tileSpace:
+            case tileWall:
+                SDL_RenderCopy(Global::window.ren, Global::textures.tilemap, &Global::clips[Global::map[y][x]], &dst);
+                break;
+            default:
+                SDL_RenderCopy(Global::window.ren, Global::textures.tilemap, &Global::clips[tileError], &dst);
+                break;
+            }
         } //end for x
     } //end for y
 
-    SDL_RenderPresent(window.ren);
+    draw_toolbox();
+    SDL_RenderPresent(Global::window.ren);
+}
+/**********************************************************************************************************************************************/
+void draw_toolbox() {
+
+
+
+}
+/**********************************************************************************************************************************************/
+void check_events() {
+
+}
+/**********************************************************************************************************************************************/
+void write_map() {
+    FILE* savemap = fopen("map.sav","w");
+    for (uint y = 0; y < 14; y++) {
+        for (uint x = 0; x < 217; x++) {
+            fprintf(savemap,"%u ", Global::map[y][x]);
+        }
+        fprintf(savemap, "\n");
+    }
 }
 /**********************************************************************************************************************************************/

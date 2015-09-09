@@ -43,8 +43,6 @@ If you are running the version in the release tab you WILL need the 32 bit versi
 
 I have also included copies of the 32 bit Runtime binaries in the releases. You can just download these if you don't know what you're doing and you're on Windows.
 
-You will also need to download and extract the Images.zip file provided in the release tab.
-
 When all is said and done you should have the following files in your folder. (Also note that you should be able to put the dll files in your C drive).
 
 ```
@@ -56,12 +54,6 @@ FolderName\SDL2_image.dll
 FolderName\libfreetype-6.dll
 FolderName\zlib1.dll
 FolderName\libpng16-16.dll
-FolderName\Images\coin.png
-FolderName\Images\monster.png
-FolderName\Images\player.png
-FolderName\Images\pole.png
-FolderName\Images\sky.png
-FolderName\Images\wall.png
 ```
 
 ### Windows
@@ -70,7 +62,7 @@ You can download the .exe under the Releases Tab you will need the SDL2 runtime 
 	
 ### Linux
 
-You should be able to use the Makefile or the Compile.sh script to compile the program. You will also need the SDL library which you can use by enter the following code into your terminal, or downloading from the link above.
+You should be able to use the Makefile to compile the program. You will also need the SDL library which you can use by enter the following code into your terminal, or downloading from the link above.
 
 Ubuntu, Mint, or Debian
 

@@ -5,8 +5,6 @@
 		<Option title="Platformer-Map-Editor" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
-		<Option show_notes="0">
-		</Option>
 		<Build>
 			<Target title="Debug">
 				<Option output="../MapMaker-PRIVATE" prefix_auto="1" extension_auto="1" />
@@ -20,6 +18,7 @@
 					<Add option="-pg" />
 					<Add option="-g" />
 					<Add option="-DDEFINED_BUILD_MODE_PRIVATE" />
+					<Add directory="Source" />
 				</Compiler>
 				<Linker>
 					<Add option="-pg" />
@@ -37,6 +36,7 @@
 				<Compiler>
 					<Add option="-O3" />
 					<Add option="-w" />
+					<Add directory="Source" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -63,12 +63,14 @@
 			<Option weight="96" />
 			<Option compiler="gcc" use="1" buildCommand="$rescomp $file $(BUILD_MODE) -O coff $resource_output" />
 		</Unit>
-		<Unit filename="../Source/image_error.xpm" />
+		<Unit filename="../Source/button.cpp" />
+		<Unit filename="../Source/button.h" />
+		<Unit filename="../Source/image_tiles.xpm" />
+		<Unit filename="../Source/image_toolbox_frame.xpm" />
 		<Unit filename="../Source/main.cpp">
 			<Option weight="0" />
 		</Unit>
-		<Unit filename="../Source/screen.cpp" />
-		<Unit filename="../Source/screen.h" />
+		<Unit filename="../Source/main.h" />
 		<Unit filename="../Source/version.h" />
 		<Extensions>
 			<code_completion />

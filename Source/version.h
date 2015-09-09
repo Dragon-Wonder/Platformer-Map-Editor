@@ -18,9 +18,9 @@
 
 //Miscellaneous Version Types
 //Don't forget to increment the build number before each build
-#define DEFINED_VER_RC_FILEVERSION 0,1,0,1
-#define DEFINED_VER_RC_FILEVERSION_STRING "0,1,0,1\0"
-#define DEFINED_VER_FULLVERSION_STRING  "0.1.0-alpha.1"
+#define DEFINED_VER_RC_FILEVERSION 0,1,0,6
+#define DEFINED_VER_RC_FILEVERSION_STRING "0,1,0,6\0"
+#define DEFINED_VER_FULLVERSION_STRING  "0.1.0-alpha.2"
 
 //Software Status
 #define DEFINED_VER_STATUS 	"Alpha"

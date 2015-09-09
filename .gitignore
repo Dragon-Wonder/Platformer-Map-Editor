@@ -48,6 +48,9 @@
 *.depend
 
 # My stuff
+/Images/
+/Images/*
+*.sav
 
 # Archived images that don't need to be on Github
 *.zip

@@ -30,9 +30,9 @@ struct stcLoaded { //Holds bools for if stuff is loaded or not
     bool blnWindow;
     bool blnRenderer;
     bool blnTiles;
-    bool blnErrortex;
     bool blnMessage;
     bool blnMessageFont;
+    bool blnToolboxFrame;
 };
 
 struct stcColors {
@@ -42,8 +42,8 @@ struct stcColors {
 
 struct stcTextures {
     SDL_Texture *tilemap;
-    SDL_Texture *errortex;
     SDL_Texture *texmessage;
+    SDL_Texture *toolboxframe;
 };
 
 struct stcWindowAtt { //Window attributes
@@ -54,10 +54,16 @@ struct stcWindowAtt { //Window attributes
     uint height;
 };
 
+struct stcPaintBrush {
+    uchar CurrentTile;
+    uchar ToolMode;
+};
+
 typedef struct stcLoaded Loaded;
 typedef struct stcColors clrs;
 typedef struct stcTextures TEX;
 typedef struct stcWindowAtt WINDATT;
+typedef struct stcPaintBrush BRUSH;
 /**********************************************************************************************************************************************/
 enum tile {
 	tileSpace = 0,
@@ -65,14 +71,25 @@ enum tile {
 	tilePlayer, //2
 	tilePole, //3
 	tileMonster, //4
-	tileCoin //5
+	tileCoin, //5
+	tileFrame, //6
+	tileError //7
+};
+
+enum tools {
+    toolPencil = 0,
+    toolBucket,
+    toolLine,
 };
 /**********************************************************************************************************************************************/
 namespace Global {
 	extern const bool blnDebugMode; //Holds if in debug mode or not. Causes more messages to appear in the console
-	extern SDL_Rect clips[6];
+	extern SDL_Rect clips[8];
 	extern const uint pic_size;
 	extern uchar map[14][217];
+	extern BRUSH paintbrush;
+	extern WINDATT window;
+	extern TEX textures;
 };
 /**********************************************************************************************************************************************/
 void set_clips(void);
@@ -81,5 +98,8 @@ void start_screen(void);
 void cleanup(void);
 void error(void);
 void show_screen(void);
+void draw_toolbox(void);
+void write_map(void);
+void check_events(void);
 /**********************************************************************************************************************************************/
 #endif
