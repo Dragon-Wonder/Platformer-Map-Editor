@@ -55,7 +55,7 @@ int main(int argc, char *argv[]) {
     while ( quit == false) {
         show_screen();
         if (SDL_PollEvent( &event ) ) {
-            check_events();
+            check_events( &event );
             if (event.type == SDL_QUIT) {quit = true;}
         }
     }
@@ -312,13 +312,49 @@ void show_screen() {
 }
 /**********************************************************************************************************************************************/
 void draw_toolbox() {
+    uint centerx; //center of the toolbox
+    centerx = (uint)(Global::window.width / 2);
+    uint xplaces[6]; //Holds all the x placement values for the toolbar.
 
+    //Calculate all the places, the tool box frame has a 2 px wide border all the way around.
+    for (uchar i = 0; i < 6; i++) {
+        xplaces[i] = centerx - ( ( 2 - i ) * 4 ) - ( ( 2 - i ) * Global::pic_size );
+        if (i <= 2 ) {xplaces[i] -= 2;}
+        else {xplaces[i] += 2;}
+    }
 
+    //Create all the buttons
+    clsButton ButtonWall(tileWall, xplaces[0], 2);
+    clsButton ButtonCoin(tileCoin, xplaces[1], 2);
+    clsButton ButtonMonster(tileMonster, xplaces[2], 2);
+    clsButton ButtonPlayer(tilePlayer, xplaces[3], 2);
+    clsButton ButtonPole(tilePole, xplaces[4], 2);
+    clsButton ButtonSpace(tileSpace, xplaces[5], 2);
 
+    //draw toolbox frame
+    SDL_Rect dst;
+    dst.w = dst.h = Global::pic_size + 4;
+    dst.y = 0;
+    for (uchar i = 0; i < 6; i++) {
+        dst.x = xplaces[i] - 2;
+        SDL_RenderCopy(Global::window.ren, Global::textures.toolboxframe, NULL, &dst);
+    }
+
+    //Show all the buttons
+    ButtonWall.show();
+    ButtonCoin.show();
+    ButtonMonster.show();
+    ButtonPlayer.show();
+    ButtonPole.show();
+    ButtonSpace.show();
 }
 /**********************************************************************************************************************************************/
-void check_events() {
-
+void check_events(SDL_Event* e) {
+    if ( e->type == SDL_MOUSEBUTTONDOWN) {
+        //get Mouse position
+        int x, y;
+        SDL_GetMouseState(&x, &y);
+    }
 }
 /**********************************************************************************************************************************************/
 void write_map() {

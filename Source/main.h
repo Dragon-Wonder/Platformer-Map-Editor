@@ -100,6 +100,6 @@ void error(void);
 void show_screen(void);
 void draw_toolbox(void);
 void write_map(void);
-void check_events(void);
+void check_events(SDL_Event*);
 /**********************************************************************************************************************************************/
 #endif
