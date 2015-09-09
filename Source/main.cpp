@@ -39,10 +39,22 @@ namespace Global {
     TEX textures;
 };
 /**********************************************************************************************************************************************/
+struct stcToolBoxButtons {
+    clsButton ButtonWall;
+    clsButton ButtonCoin;
+    clsButton ButtonMonster;
+    clsButton ButtonPlayer;
+    clsButton ButtonPole;
+    clsButton ButtonSpace;
+};
+
+typedef struct stcToolBoxButtons BUTTNS;
+/**********************************************************************************************************************************************/
 //Globals in this file.
 Loaded blnload;
 clrs colors;
 bool bln_SDL_Started;
+BUTTNS toolboxbuttons;
 /**********************************************************************************************************************************************/
 int main(int argc, char *argv[]) {
     bool quit = false;
@@ -324,12 +336,12 @@ void draw_toolbox() {
     }
 
     //Create all the buttons
-    clsButton ButtonWall(tileWall, xplaces[0], 2);
-    clsButton ButtonCoin(tileCoin, xplaces[1], 2);
-    clsButton ButtonMonster(tileMonster, xplaces[2], 2);
-    clsButton ButtonPlayer(tilePlayer, xplaces[3], 2);
-    clsButton ButtonPole(tilePole, xplaces[4], 2);
-    clsButton ButtonSpace(tileSpace, xplaces[5], 2);
+    toolboxbuttons.ButtonWall.setbutton(tileWall, xplaces[0], 2);
+    toolboxbuttons.ButtonCoin.setbutton(tileCoin, xplaces[1], 2);
+    toolboxbuttons.ButtonMonster.setbutton(tileMonster, xplaces[2], 2);
+    toolboxbuttons.ButtonPlayer.setbutton(tilePlayer, xplaces[3], 2);
+    toolboxbuttons.ButtonPole.setbutton(tilePole, xplaces[4], 2);
+    toolboxbuttons.ButtonSpace.setbutton(tileSpace, xplaces[5], 2);
 
     //draw toolbox frame
     SDL_Rect dst;
@@ -341,12 +353,12 @@ void draw_toolbox() {
     }
 
     //Show all the buttons
-    ButtonWall.show();
-    ButtonCoin.show();
-    ButtonMonster.show();
-    ButtonPlayer.show();
-    ButtonPole.show();
-    ButtonSpace.show();
+    toolboxbuttons.ButtonWall.show();
+    toolboxbuttons.ButtonCoin.show();
+    toolboxbuttons.ButtonMonster.show();
+    toolboxbuttons.ButtonPlayer.show();
+    toolboxbuttons.ButtonPole.show();
+    toolboxbuttons.ButtonSpace.show();
 }
 /**********************************************************************************************************************************************/
 void check_events(SDL_Event* e) {
@@ -354,6 +366,64 @@ void check_events(SDL_Event* e) {
         //get Mouse position
         int x, y;
         SDL_GetMouseState(&x, &y);
+
+        //check all of the buttons to see if we are on that one.
+
+        SDL_Rect button;
+
+        button = toolboxbuttons.ButtonCoin.getPlacement();
+        if ( x >= button.x && x <= button.x + button.w ) { //In the x range
+            if ( y >= button.y && y <= button.y + button.h) { //in the y range
+                toolboxbuttons.ButtonCoin.handle_events();
+            }
+        }
+
+        button = toolboxbuttons.ButtonWall.getPlacement();
+        if ( x >= button.x && x <= button.x + button.w ) { //In the x range
+            if ( y >= button.y && y <= button.y + button.h) { //in the y range
+                toolboxbuttons.ButtonWall.handle_events();
+            }
+        }
+
+        button = toolboxbuttons.ButtonPlayer.getPlacement();
+        if ( x >= button.x && x <= button.x + button.w ) { //In the x range
+            if ( y >= button.y && y <= button.y + button.h) { //in the y range
+                toolboxbuttons.ButtonPlayer.handle_events();
+            }
+        }
+
+        button = toolboxbuttons.ButtonPole.getPlacement();
+        if ( x >= button.x && x <= button.x + button.w ) { //In the x range
+            if ( y >= button.y && y <= button.y + button.h) { //in the y range
+                toolboxbuttons.ButtonCoin.handle_events();
+            }
+        }
+
+        button = toolboxbuttons.ButtonPole.getPlacement();
+        if ( x >= button.x && x <= button.x + button.w ) { //In the x range
+            if ( y >= button.y && y <= button.y + button.h) { //in the y range
+                toolboxbuttons.ButtonCoin.handle_events();
+            }
+        }
+
+        button = toolboxbuttons.ButtonSpace.getPlacement();
+        if ( x >= button.x && x <= button.x + button.w ) { //In the x range
+            if ( y >= button.y && y <= button.y + button.h) { //in the y range
+                toolboxbuttons.ButtonCoin.handle_events();
+            }
+        }
+
+
+
+        //user did not click on any buttons therefore change the map tile.
+        //convert to map coordinates
+
+        uint mapx, mapy;
+
+        mapx = (uint) (x / Global::pic_size);
+        mapy = (uint) (y / Global::pic_size);
+
+        Global::map[mapy][mapx] = Global::paintbrush.CurrentTile;
     }
 }
 /**********************************************************************************************************************************************/
@@ -367,3 +437,4 @@ void write_map() {
     }
 }
 /**********************************************************************************************************************************************/
+

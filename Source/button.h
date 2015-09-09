@@ -5,12 +5,13 @@
 /**********************************************************************************************************************************************/
 class clsButton {
     public:
-        clsButton(uchar, uint, uint);
+        clsButton();
         ~clsButton();
 
         void show(void);
         void handle_events();
         SDL_Rect getPlacement(void);
+        void setbutton(uchar, uint, uint);
 
     private:
         SDL_Rect box;

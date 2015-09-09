@@ -1,9 +1,6 @@
 #ifndef __VERSION_HEADER__
 #define __VERSION_HEADER__
 
-//Initially was created using Code::Blocks' auto-versifying. However
-//it kept really messing up the system I was using so I turned it off
-
 //Date Version Types
 #define DEFINED_VER_DATE "09"
 #define DEFINED_VER_MONTH "09"
@@ -13,14 +10,14 @@
 
 //Standard Version Type
 #define DEFINED_VER_MAJOR  0
-#define DEFINED_VER_MINOR  2
+#define DEFINED_VER_MINOR  3
 #define DEFINED_VER_PATCH  0
 
 //Miscellaneous Version Types
 //Don't forget to increment the build number before each build
-#define DEFINED_VER_RC_FILEVERSION 0,2,0,1
-#define DEFINED_VER_RC_FILEVERSION_STRING "0,2,0,1\0"
-#define DEFINED_VER_FULLVERSION_STRING  "0.2.0"
+#define DEFINED_VER_RC_FILEVERSION 0,3,0,1
+#define DEFINED_VER_RC_FILEVERSION_STRING "0,3,0,1\0"
+#define DEFINED_VER_FULLVERSION_STRING  "0.3.0"
 
 //Software Status
 #define DEFINED_VER_STATUS 	"Alpha"
