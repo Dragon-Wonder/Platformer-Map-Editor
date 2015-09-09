@@ -4,7 +4,6 @@
 
 This is a map editor / maker that is meant to be used with my other project the experimental platformer Ai which you can find [here] (https://github.com/GamerMan7799/Experimental-Platformer-AI)
 
-
 ## License and copyright
 
 All of this project was written from scratch by [GamerMan7799] (https://github.com/GamerMan7799) & [xPUREx](https://github.com/xPUREx) unless otherwise noted.
@@ -77,4 +76,15 @@ sudo apt-get install libsdl2-image-dev
 I don't know you're on your own. Sorry.
 
 ## Using the Project
+
+You select what you want to draw with by selecting it from the toolbar on the top.
+
+Then you simply click on the tiles you want to change.
+
+Please note there there can only be one player and there has to be a player. There are no checks at the moment to see if it is valid.
+
+You can change your position on the map using the arrow keys.
+
+
+
 

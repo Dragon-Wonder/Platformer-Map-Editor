@@ -3,6 +3,12 @@
 All notable changes to this project will be documented here.
 This project adheres to [Semantic Versioning](http://semver.org/)
 
+## UNRELEASED [0.4.0] - 2015-09-09
+### Updated
+* Makefile
+### Fixed
+* Some buttons not working because of a copy paste error
+
 ## [0.3.0] - 2015-09-09
 ### Changed
 * How buttons are made.

@@ -59,12 +59,13 @@ BUTTNS toolboxbuttons;
 int main(int argc, char *argv[]) {
     bool quit = false;
     SDL_Event event;
-
+	//TODO allow setting of map size
     set_clips();
     start_screen();
     if (bln_SDL_Started == false) {return 1;}
 
     while ( quit == false) {
+		//TODO scrolling with arrows keys.
         show_screen();
         if (SDL_PollEvent( &event ) ) {
             check_events( &event );
@@ -73,6 +74,7 @@ int main(int argc, char *argv[]) {
     }
 
     cleanup();
+	//TODO ask if should save
     write_map();
 	return 0;
 }
@@ -327,7 +329,7 @@ void draw_toolbox() {
     uint centerx; //center of the toolbox
     centerx = (uint)(Global::window.width / 2);
     uint xplaces[6]; //Holds all the x placement values for the toolbar.
-
+	//FIXME wierd space in toolbar
     //Calculate all the places, the tool box frame has a 2 px wide border all the way around.
     for (uchar i = 0; i < 6; i++) {
         xplaces[i] = centerx - ( ( 2 - i ) * 4 ) - ( ( 2 - i ) * Global::pic_size );
@@ -392,28 +394,26 @@ void check_events(SDL_Event* e) {
             }
         }
 
-        button = toolboxbuttons.ButtonPole.getPlacement();
+        button = toolboxbuttons.ButtonMonster.getPlacement();
         if ( x >= button.x && x <= button.x + button.w ) { //In the x range
             if ( y >= button.y && y <= button.y + button.h) { //in the y range
-                toolboxbuttons.ButtonCoin.handle_events();
+                toolboxbuttons.ButtonMonster.handle_events();
             }
         }
 
         button = toolboxbuttons.ButtonPole.getPlacement();
         if ( x >= button.x && x <= button.x + button.w ) { //In the x range
             if ( y >= button.y && y <= button.y + button.h) { //in the y range
-                toolboxbuttons.ButtonCoin.handle_events();
+                toolboxbuttons.ButtonPole.handle_events();
             }
         }
 
         button = toolboxbuttons.ButtonSpace.getPlacement();
         if ( x >= button.x && x <= button.x + button.w ) { //In the x range
             if ( y >= button.y && y <= button.y + button.h) { //in the y range
-                toolboxbuttons.ButtonCoin.handle_events();
+                toolboxbuttons.ButtonSpace.handle_events();
             }
         }
-
-
 
         //user did not click on any buttons therefore change the map tile.
         //convert to map coordinates
