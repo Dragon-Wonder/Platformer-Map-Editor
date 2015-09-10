@@ -3,6 +3,15 @@
 All notable changes to this project will be documented here.
 This project adheres to [Semantic Versioning](http://semver.org/)
 
+## [0.5.0] - 2015-09-10
+### Added
+* Save icon, Close icon, left and right arrows to tile map (not implemented yet)
+* Moving camera with arrow keys
+* Defines
+* Saving Map with key press ('v')
+* Quiting with Key press ('q' or ESC)
+
+
 ## [0.4.0] - 2015-09-10
 ### Updated
 * Makefile

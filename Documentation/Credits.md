@@ -11,6 +11,12 @@ We would like to thank the following people for their work and support (knowingl
 
 [SpoonGraphics](http://blog.spoongraphics.co.uk/) for the monster image that is used.
 
+[Oxygen Team] (http://www.oxygen-icons.org/) for their save icon.
+
+[IconsMind] (https://www.iconsmind.com/) for their close icon.
+
+[Icojam] (http://www.icojam.com) for their left and right arrow icons.
+
 The Developers of the [SDL Library] (https://www.libsdl.org/credits.php)
 
 Mr Foo for his amazing tutorial on SDL, which can be found [here](http://lazyfoo.net/)

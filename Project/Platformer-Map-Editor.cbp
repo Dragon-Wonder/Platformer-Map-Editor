@@ -63,8 +63,6 @@
 			<Option weight="96" />
 			<Option compiler="gcc" use="1" buildCommand="$rescomp $file $(BUILD_MODE) -O coff $resource_output" />
 		</Unit>
-		<Unit filename="../Source/button.cpp" />
-		<Unit filename="../Source/button.h" />
 		<Unit filename="../Source/image_tiles.xpm" />
 		<Unit filename="../Source/image_toolbox_frame.xpm" />
 		<Unit filename="../Source/main.cpp">

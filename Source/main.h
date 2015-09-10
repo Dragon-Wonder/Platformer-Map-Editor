@@ -21,6 +21,11 @@
     #define DEFINED_MESSAGE_FONT "OS NOT SUPPORTED!"
 #endif // defined OS
 /**********************************************************************************************************************************************/
+#define DEFINED_MAP_HEIGHT 14
+#define DEFINED_MAP_WIDTH 217
+#define DEFINED_NUM_OF_TILES 12
+#define DEFINED_NUM_BUTN_TILES 6
+/**********************************************************************************************************************************************/
 //Ahh laziness at its finest
 typedef unsigned char uchar;
 typedef unsigned int uint;
@@ -59,11 +64,17 @@ struct stcButton {
     uchar buttontype;
 };
 
+struct stcOffset {
+    int x;
+    int y;
+};
+
 typedef struct stcLoaded Loaded;
 typedef struct stcColors clrs;
 typedef struct stcWindowAtt WINDATT;
 typedef struct stcPaintBrush BRUSH;
 typedef struct stcButton BTTN;
+typedef struct stcOffset OFFST;
 /**********************************************************************************************************************************************/
 enum tile {
 	tileSpace = 0,
@@ -72,8 +83,12 @@ enum tile {
 	tilePole, //3
 	tileMonster, //4
 	tileCoin, //5
-	tileFrame, //6
-	tileError //7
+	menuFrame, //6
+	menuError, //7
+	menuSave, //8
+	menuClose, //9
+	menuLeft, //10
+	menuRight //11
 };
 
 enum tools {
@@ -85,7 +100,7 @@ enum tools {
 namespace Global {
 	extern const bool blnDebugMode; //Holds if in debug mode or not. Causes more messages to appear in the console-
 	extern const uint pic_size;
-	extern uchar map[14][217];
+	extern uchar map[DEFINED_MAP_HEIGHT][DEFINED_MAP_WIDTH];
 };
 /**********************************************************************************************************************************************/
 //Functions related to the screen
@@ -94,11 +109,13 @@ namespace Screen {
     void show(void);
     void cleanup(void);
     void error(void);
+    char promptuser(uchar, std::string);
 
     Loaded blnload;
     clrs colors;
     bool bln_SDL_Started;
     WINDATT window;
+    OFFST offset;
 };
 
 //Functions related to the toolbar
@@ -107,9 +124,9 @@ namespace Toolbar {
     void check_events(SDL_Event*);
     void make_buttons(void);
 
-    uint button_xplaces[6];
+    uint button_xplaces[DEFINED_NUM_BUTN_TILES];
     BRUSH paintbrush;
-    BTTN tilebuttons[6];
+    BTTN tilebuttons[DEFINED_NUM_BUTN_TILES];
 };
 
 //Stuff related to the textures
@@ -120,12 +137,14 @@ namespace Textures {
     SDL_Texture *tilemap;
     SDL_Texture *texmessage;
     SDL_Texture *toolboxframe;
-    SDL_Rect clips[8];
+    SDL_Rect clips[DEFINED_NUM_OF_TILES];
 };
 
 //Functions related to the map
 namespace Map {
-    void write_map(void);
+    void save(void);
+    void load(void);
+    void newmap(void);
 };
 /**********************************************************************************************************************************************/
 #endif
