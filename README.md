@@ -85,6 +85,20 @@ Please note there there can only be one player and there has to be a player. The
 
 You can change your position on the map using the arrow keys.
 
+HOME or END will take you to the start or end of the map
+
+Page Up and Page down will move you one screen's width at a time.
+
+You can use the number keys (1-6) to switch your tile for painting. (You can also just click on the tile). 
+
+Q, ESC, or Hitting the X on the window will close the program.
+
+N will wipe the map (you will be promted)
+
+V to save the map (you will be prompted if one already exists)
+
+
+
 
 
 
