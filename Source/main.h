@@ -96,6 +96,11 @@ enum tools {
     toolBucket,
     toolLine,
 };
+
+enum prompttype {
+    promptYesNo = 0,
+    promptOkay
+};
 /**********************************************************************************************************************************************/
 namespace Global {
 	extern const bool blnDebugMode; //Holds if in debug mode or not. Causes more messages to appear in the console-
@@ -116,6 +121,7 @@ namespace Screen {
     bool bln_SDL_Started;
     WINDATT window;
     OFFST offset;
+    OFFST modoffset; //offset that has been modded slightly (is this even needed?)
 };
 
 //Functions related to the toolbar

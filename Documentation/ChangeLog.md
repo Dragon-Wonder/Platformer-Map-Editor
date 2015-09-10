@@ -3,6 +3,16 @@
 All notable changes to this project will be documented here.
 This project adheres to [Semantic Versioning](http://semver.org/)
 
+## [0.6.0] - 2015-09-10
+### Added
+* Restarting of map
+* Switching tile by num keys 1 - 6
+* Prompt to replace a map save
+
+### Fixed
+* Drawing map on being messed being I forgot to factor in offset
+
+
 ## [0.5.0] - 2015-09-10
 ### Added
 * Save icon, Close icon, left and right arrows to tile map (not implemented yet)
