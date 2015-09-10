@@ -40,12 +40,6 @@ struct stcColors {
     SDL_Color White;
 };
 
-struct stcTextures {
-    SDL_Texture *tilemap;
-    SDL_Texture *texmessage;
-    SDL_Texture *toolboxframe;
-};
-
 struct stcWindowAtt { //Window attributes
     SDL_Window *win;
     SDL_Renderer *ren;
@@ -59,11 +53,17 @@ struct stcPaintBrush {
     uchar ToolMode;
 };
 
+struct stcButton {
+    SDL_Rect box;
+    SDL_Rect *clip;
+    uchar buttontype;
+};
+
 typedef struct stcLoaded Loaded;
 typedef struct stcColors clrs;
-typedef struct stcTextures TEX;
 typedef struct stcWindowAtt WINDATT;
 typedef struct stcPaintBrush BRUSH;
+typedef struct stcButton BTTN;
 /**********************************************************************************************************************************************/
 enum tile {
 	tileSpace = 0,
@@ -83,23 +83,49 @@ enum tools {
 };
 /**********************************************************************************************************************************************/
 namespace Global {
-	extern const bool blnDebugMode; //Holds if in debug mode or not. Causes more messages to appear in the console
-	extern SDL_Rect clips[8];
+	extern const bool blnDebugMode; //Holds if in debug mode or not. Causes more messages to appear in the console-
 	extern const uint pic_size;
 	extern uchar map[14][217];
-	extern BRUSH paintbrush;
-	extern WINDATT window;
-	extern TEX textures;
 };
 /**********************************************************************************************************************************************/
-void set_clips(void);
-void load_textures(void);
-void start_screen(void);
-void cleanup(void);
-void error(void);
-void show_screen(void);
-void draw_toolbox(void);
-void write_map(void);
-void check_events(SDL_Event*);
+//Functions related to the screen
+namespace Screen {
+    void start(void);
+    void show(void);
+    void cleanup(void);
+    void error(void);
+
+    Loaded blnload;
+    clrs colors;
+    bool bln_SDL_Started;
+    WINDATT window;
+};
+
+//Functions related to the toolbar
+namespace Toolbar {
+    void draw(void);
+    void check_events(SDL_Event*);
+    void make_buttons(void);
+
+    uint button_xplaces[6];
+    BRUSH paintbrush;
+    BTTN tilebuttons[6];
+};
+
+//Stuff related to the textures
+namespace Textures {
+    void load(void);
+    void set_clips(void);
+
+    SDL_Texture *tilemap;
+    SDL_Texture *texmessage;
+    SDL_Texture *toolboxframe;
+    SDL_Rect clips[8];
+};
+
+//Functions related to the map
+namespace Map {
+    void write_map(void);
+};
 /**********************************************************************************************************************************************/
 #endif

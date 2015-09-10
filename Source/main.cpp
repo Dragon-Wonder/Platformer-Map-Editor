@@ -4,7 +4,6 @@
 /**********************************************************************************************************************************************/
 #include "main.h"
 #include "version.h"
-#include "button.h"
 /**********************************************************************************************************************************************/
 #include "image_tiles.xpm"
 #include "image_toolbox_frame.xpm"
@@ -18,7 +17,6 @@ namespace Global {
     #else
         const bool blnDebugMode = true;
     #endif // DEFINED_BUILD_MODE_PRIVATE
-    SDL_Rect clips[8];
     const uint pic_size = 24;
     uchar map[14][217] = {{1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
                         {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -34,161 +32,148 @@ namespace Global {
                         {1,1,1,1,1,2,0,0,0,0,0,0,0,1,1,1,1,1,1,0,0,0,4,0,0,1,1,1,1,0,0,0,0,0,0,0,4,0,0,0,0,1,1,0,1,1,1,1,0,1,1,1,1,1,1,1,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,0,0,0,0,0,0,4,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,1,1,1,1,1,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1,0,0,3,0,0,0,1,1,1,1,1,1,0,0,0},
                         {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
                         {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}};
-    BRUSH paintbrush;
-    WINDATT window;
-    TEX textures;
-};
-/**********************************************************************************************************************************************/
-struct stcToolBoxButtons {
-    clsButton ButtonWall;
-    clsButton ButtonCoin;
-    clsButton ButtonMonster;
-    clsButton ButtonPlayer;
-    clsButton ButtonPole;
-    clsButton ButtonSpace;
-};
 
-typedef struct stcToolBoxButtons BUTTNS;
-/**********************************************************************************************************************************************/
-//Globals in this file.
-Loaded blnload;
-clrs colors;
-bool bln_SDL_Started;
-BUTTNS toolboxbuttons;
+};
 /**********************************************************************************************************************************************/
 int main(int argc, char *argv[]) {
     bool quit = false;
     SDL_Event event;
 	//TODO allow setting of map size
-    set_clips();
-    start_screen();
-    if (bln_SDL_Started == false) {return 1;}
+    /* TODO (GamerMan7799#1#): Add menu buttons (such as save, close, and reset, maybe others too) */
+
+	//Initiate everything that needs it
+    Textures::set_clips();
+    Screen::start();
+    //quits the program if there was an error starting SDL, its components or in getting the textures we need.
+    if (Screen::bln_SDL_Started == false) {return 1;}
+    //Make all the buttons for the toolbar
+    Toolbar::make_buttons();
 
     while ( quit == false) {
 		//TODO scrolling with arrows keys.
-        show_screen();
+        Screen::show();
         if (SDL_PollEvent( &event ) ) {
-            check_events( &event );
+            Toolbar::check_events( &event );
             if (event.type == SDL_QUIT) {quit = true;}
         }
     }
 
-    cleanup();
+    //Clean up the screen
+    Screen::cleanup();
 	//TODO ask if should save
-    write_map();
+    Map::write_map();
 	return 0;
 }
 /**********************************************************************************************************************************************/
-void set_clips() {
+void Textures::set_clips() {
     //Sets all the location of tiles in the main tile.png
 
-    Global::clips[tileCoin].x = 0 * Global::pic_size;
-    Global::clips[tileCoin].y = 0 * Global::pic_size;
-    Global::clips[tileCoin].h = Global::pic_size;
-    Global::clips[tileCoin].w = Global::pic_size;
+    Textures::clips[tileCoin].x = 0 * Global::pic_size;
+    Textures::clips[tileCoin].y = 0 * Global::pic_size;
+    Textures::clips[tileCoin].h = Global::pic_size;
+    Textures::clips[tileCoin].w = Global::pic_size;
 
-    Global::clips[tileMonster].x = 1 * Global::pic_size;
-    Global::clips[tileMonster].y = 0 * Global::pic_size;
-    Global::clips[tileMonster].h = Global::pic_size;
-    Global::clips[tileMonster].w = Global::pic_size;
+    Textures::clips[tileMonster].x = 1 * Global::pic_size;
+    Textures::clips[tileMonster].y = 0 * Global::pic_size;
+    Textures::clips[tileMonster].h = Global::pic_size;
+    Textures::clips[tileMonster].w = Global::pic_size;
 
-    Global::clips[tilePlayer].x = 2 * Global::pic_size;
-    Global::clips[tilePlayer].y = 0 * Global::pic_size;
-    Global::clips[tilePlayer].h = Global::pic_size;
-    Global::clips[tilePlayer].w = Global::pic_size;
+    Textures::clips[tilePlayer].x = 2 * Global::pic_size;
+    Textures::clips[tilePlayer].y = 0 * Global::pic_size;
+    Textures::clips[tilePlayer].h = Global::pic_size;
+    Textures::clips[tilePlayer].w = Global::pic_size;
 
-    Global::clips[tileWall].x = 0 * Global::pic_size;
-    Global::clips[tileWall].y = 1 * Global::pic_size;
-    Global::clips[tileWall].h = Global::pic_size;
-    Global::clips[tileWall].w = Global::pic_size;
+    Textures::clips[tileWall].x = 0 * Global::pic_size;
+    Textures::clips[tileWall].y = 1 * Global::pic_size;
+    Textures::clips[tileWall].h = Global::pic_size;
+    Textures::clips[tileWall].w = Global::pic_size;
 
-    Global::clips[tileSpace].x = 1 * Global::pic_size;
-    Global::clips[tileSpace].y = 1 *Global::pic_size;
-    Global::clips[tileSpace].h = Global::pic_size;
-    Global::clips[tileSpace].w = Global::pic_size;
+    Textures::clips[tileSpace].x = 1 * Global::pic_size;
+    Textures::clips[tileSpace].y = 1 *Global::pic_size;
+    Textures::clips[tileSpace].h = Global::pic_size;
+    Textures::clips[tileSpace].w = Global::pic_size;
 
-    Global::clips[tilePole].x = 2 * Global::pic_size;
-    Global::clips[tilePole].y = 1 * Global::pic_size;
-    Global::clips[tilePole].h = Global::pic_size;
-    Global::clips[tilePole].w = Global::pic_size;
+    Textures::clips[tilePole].x = 2 * Global::pic_size;
+    Textures::clips[tilePole].y = 1 * Global::pic_size;
+    Textures::clips[tilePole].h = Global::pic_size;
+    Textures::clips[tilePole].w = Global::pic_size;
 
-    Global::clips[tileFrame].x = 3 * Global::pic_size;
-    Global::clips[tileFrame].y = 0 *Global::pic_size;
-    Global::clips[tileFrame].h = Global::pic_size;
-    Global::clips[tileFrame].w = Global::pic_size;
+    Textures::clips[tileFrame].x = 3 * Global::pic_size;
+    Textures::clips[tileFrame].y = 0 *Global::pic_size;
+    Textures::clips[tileFrame].h = Global::pic_size;
+    Textures::clips[tileFrame].w = Global::pic_size;
 
-    Global::clips[tileError].x = 3 * Global::pic_size;
-    Global::clips[tileError].y = 1 * Global::pic_size;
-    Global::clips[tileError].h = Global::pic_size;
-    Global::clips[tileError].w = Global::pic_size;
+    Textures::clips[tileError].x = 3 * Global::pic_size;
+    Textures::clips[tileError].y = 1 * Global::pic_size;
+    Textures::clips[tileError].h = Global::pic_size;
+    Textures::clips[tileError].w = Global::pic_size;
 
-    if (Global::blnDebugMode) {printf("Global::clips made.\n");}
+    if (Global::blnDebugMode) {printf("Clips made.\n");}
 }
 /**********************************************************************************************************************************************/
-void load_textures() {
+void Textures::load() {
     //Load tiles
     SDL_Surface* temp = IMG_ReadXPMFromArray(image_tiles_xpm);
 
     if (temp == nullptr) {
         printf("Failed to load embedded images.\n");
-        error();
+        Screen::error();
         return;
 	} else {
 	    if (Global::blnDebugMode) {printf("Error surface created.\n");}
     }
 
-	Global::textures.tilemap = SDL_CreateTextureFromSurface(Global::window.ren,temp);
-	if (Global::textures.tilemap == nullptr) {
+	Textures::tilemap = SDL_CreateTextureFromSurface(Screen::window.ren,temp);
+	if (Textures::tilemap == nullptr) {
         printf("Failed to create texture.\n");
-        error();
+        Screen::error();
         return;
 	} else {
 	    if (Global::blnDebugMode) {printf("Surface to texture successful\n");}
-	    blnload.blnTiles = true;
+	    Screen::blnload.blnTiles = true;
     }
-
 
     //Load toolbox frame
     temp = IMG_ReadXPMFromArray(image_toolbox_frame_xpm);
 
     if (temp == nullptr) {
         printf("Failed to load embedded images.\n");
-        error();
+        Screen::error();
         return;
 	} else {
 	    if (Global::blnDebugMode) {printf("Error surface created.\n");}
     }
 
-	Global::textures.toolboxframe = SDL_CreateTextureFromSurface(Global::window.ren,temp);
-	if (Global::textures.toolboxframe == nullptr) {
+	Textures::toolboxframe = SDL_CreateTextureFromSurface(Screen::window.ren,temp);
+	if (Textures::toolboxframe == nullptr) {
         printf("Failed to create texture.\n");
-        error();
+        Screen::error();
         return;
 	} else {
 	    if (Global::blnDebugMode) {printf("Surface to texture successful\n");}
-	    blnload.blnToolboxFrame = true;
+	    Screen::blnload.blnToolboxFrame = true;
     }
 
     SDL_FreeSurface(temp);
 }
 /**********************************************************************************************************************************************/
-void start_screen() {
-    Global::window.width = 35*Global::pic_size;
-    Global::window.height = 14*Global::pic_size;
-    blnload.blnMessage = blnload.blnMessageFont = blnload.blnTiles = blnload.blnToolboxFrame = false;
-    blnload.blnWindow = blnload.blnRenderer = bln_SDL_Started = false;
+void Screen::start() {
+    Screen::window.width = 35*Global::pic_size;
+    Screen::window.height = 14*Global::pic_size;
+    Screen::blnload.blnMessage = Screen::blnload.blnMessageFont = Screen::blnload.blnTiles = Screen::blnload.blnToolboxFrame = false;
+    Screen::blnload.blnWindow = Screen::blnload.blnRenderer = Screen::bln_SDL_Started = false;
 
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
-        error();
+        Screen::error();
         return;
     } else {
-        bln_SDL_Started = true;
+        Screen::bln_SDL_Started = true;
         if (Global::blnDebugMode) {printf("SDL init successful\n");}
     }
 
     //Start TTF
     if (TTF_Init() != 0) {
-        error();
+        Screen::error();
         return;
     } else {
         if (Global::blnDebugMode) {printf("TTF init successful\n");}
@@ -196,83 +181,83 @@ void start_screen() {
 
     //Start Image (with only png)
     if (!(IMG_Init( IMG_INIT_PNG )) & IMG_INIT_PNG) {
-        error();
+        Screen::error();
         return;
     } else {
         if (Global::blnDebugMode) {printf("IMG init successful\n");}
     }
 
-    Global::window.MessageFont = TTF_OpenFont(DEFINED_MESSAGE_FONT,16); //Opens font and sets size
-    if ( Global::window.MessageFont == nullptr) {
+    Screen::window.MessageFont = TTF_OpenFont(DEFINED_MESSAGE_FONT,16); //Opens font and sets size
+    if ( Screen::window.MessageFont == nullptr) {
         printf("Font failed to load, messages will not appear.");
-        blnload.blnMessageFont = false;
+        Screen::blnload.blnMessageFont = false;
     } else {
         if(Global::blnDebugMode) {printf("Message font created\n");}
-       blnload.blnMessageFont = true;
+       Screen::blnload.blnMessageFont = true;
     }
 
-    Global::window.win = SDL_CreateWindow("Map Maker", 100, 100, Global::window.width, Global::window.height, SDL_WINDOW_SHOWN);
-    if (Global::window.win == nullptr) {
-        printf("SDL Failed to create Global::window.\n");
-        error();
+    Screen::window.win = SDL_CreateWindow("Map Maker", 100, 100, Screen::window.width, Screen::window.height, SDL_WINDOW_SHOWN);
+    if (Screen::window.win == nullptr) {
+        printf("SDL Failed to create Screen::window.\n");
+        Screen::error();
         return;
     } else {
-        blnload.blnWindow = true;
-        if (Global::blnDebugMode) {printf("Window creation successful\n");}
+        Screen::blnload.blnWindow = true;
+        if (Global::blnDebugMode) {printf("Screen::window creation successful\n");}
     }
 
-    Global::window.ren = SDL_CreateRenderer(Global::window.win, -1, SDL_RENDERER_ACCELERATED);
-    if (Global::window.ren == nullptr) {
+    Screen::window.ren = SDL_CreateRenderer(Screen::window.win, -1, SDL_RENDERER_ACCELERATED);
+    if (Screen::window.ren == nullptr) {
         printf("SDL Failed to create renderer.\n");
-        error();
+        Screen::error();
         return;
     } else {
-        blnload.blnRenderer = true;
+        Screen::blnload.blnRenderer = true;
         if (Global::blnDebugMode) {printf("Renderer creation successful\n");}
     }
 
-    load_textures();
-    if (bln_SDL_Started == false) {return;}
+    Textures::load();
+    if (Screen::bln_SDL_Started == false) {return;}
 
-    colors.Black = {0, 0, 0, 0};
-    //colors.White = (255, 255, 255, 0);
-    show_screen();
+    Screen::colors.Black = {0, 0, 0, 0};
+    //Screen::colors.White = (255, 255, 255, 0);
+    //Screen::show();
 }
 /**********************************************************************************************************************************************/
-void cleanup() {
-    if (blnload.blnMessage) {
-        SDL_DestroyTexture(Global::textures.texmessage);
-        blnload.blnMessage = false;
+void Screen::cleanup() {
+    if (Screen::blnload.blnMessage) {
+        SDL_DestroyTexture(Textures::texmessage);
+        Screen::blnload.blnMessage = false;
         if(Global::blnDebugMode) {printf("Message texture destroyed.\n");}
     }
 
-    if (blnload.blnTiles) {
-        SDL_DestroyTexture(Global::textures.tilemap);
-        blnload.blnTiles = false;
+    if (Screen::blnload.blnTiles) {
+        SDL_DestroyTexture(Textures::tilemap);
+        Screen::blnload.blnTiles = false;
         if(Global::blnDebugMode) {printf("Map tile texture destroyed.\n");}
     }
 
-    if (blnload.blnToolboxFrame) {
-        SDL_DestroyTexture(Global::textures.toolboxframe);
-        blnload.blnToolboxFrame = false;
+    if (Screen::blnload.blnToolboxFrame) {
+        SDL_DestroyTexture(Textures::toolboxframe);
+        Screen::blnload.blnToolboxFrame = false;
         if(Global::blnDebugMode) {printf("Map tile texture destroyed.\n");}
     }
 
-    if (blnload.blnMessageFont) {
-        TTF_CloseFont(Global::window.MessageFont);
-        blnload.blnMessageFont = false;
+    if (Screen::blnload.blnMessageFont) {
+        TTF_CloseFont(Screen::window.MessageFont);
+        Screen::blnload.blnMessageFont = false;
         if(Global::blnDebugMode) {printf("Message font destroyed.\n");}
     }
 
-    if (blnload.blnRenderer) {
-        SDL_DestroyRenderer(Global::window.ren);
-        blnload.blnRenderer = false;
+    if (Screen::blnload.blnRenderer) {
+        SDL_DestroyRenderer(Screen::window.ren);
+        Screen::blnload.blnRenderer = false;
         if (Global::blnDebugMode) {printf("Renderer destroyed\n");}
     }
 
-	if (blnload.blnWindow) {
-        SDL_DestroyWindow(Global::window.win);
-        blnload.blnWindow = false;
+	if (Screen::blnload.blnWindow) {
+        SDL_DestroyWindow(Screen::window.win);
+        Screen::blnload.blnWindow = false;
         if (Global::blnDebugMode) {printf("Window destroyed\n");}
     }
 
@@ -282,20 +267,20 @@ void cleanup() {
     if (Global::blnDebugMode) {printf("SDL quit\n");}
 }
 /**********************************************************************************************************************************************/
-void error() {
-    bln_SDL_Started = false;
+void Screen::error() {
+    Screen::bln_SDL_Started = false;
     printf("SDL error: %s\n", SDL_GetError());
     printf("TTF error: %s\n", TTF_GetError());
     printf("IMG error: %s\n", IMG_GetError());
     getchar();
-    cleanup();
+    Screen::cleanup();
 }
 /**********************************************************************************************************************************************/
-void show_screen() {
+void Screen::show() {
     //Clear renderer
-    SDL_RenderClear(Global::window.ren);
+    SDL_RenderClear(Screen::window.ren);
     //copy sky to cover entire screen.
-    SDL_RenderCopy(Global::window.ren, Global::textures.tilemap, &Global::clips[tileSpace], NULL);
+    SDL_RenderCopy(Screen::window.ren, Textures::tilemap, &Textures::clips[tileSpace], NULL);
     SDL_Rect dst;
     for (uint y = 0; (y < 14); y++) {
         for (uint x = 0; (x < 217); x++) {
@@ -312,58 +297,60 @@ void show_screen() {
             case tilePole:
             case tileSpace:
             case tileWall:
-                SDL_RenderCopy(Global::window.ren, Global::textures.tilemap, &Global::clips[Global::map[y][x]], &dst);
+                SDL_RenderCopy(Screen::window.ren, Textures::tilemap, &Textures::clips[Global::map[y][x]], &dst);
                 break;
             default:
-                SDL_RenderCopy(Global::window.ren, Global::textures.tilemap, &Global::clips[tileError], &dst);
+                SDL_RenderCopy(Screen::window.ren, Textures::tilemap, &Textures::clips[tileError], &dst);
                 break;
             }
         } //end for x
     } //end for y
 
-    draw_toolbox();
-    SDL_RenderPresent(Global::window.ren);
+    Toolbar::draw();
+    SDL_RenderPresent(Screen::window.ren);
 }
 /**********************************************************************************************************************************************/
-void draw_toolbox() {
+void Toolbar::make_buttons() {
     uint centerx; //center of the toolbox
-    centerx = (uint)(Global::window.width / 2);
-    uint xplaces[6]; //Holds all the x placement values for the toolbar.
-	//FIXME wierd space in toolbar
+    centerx = (uint)(Screen::window.width / 2);
+	//FIXME weird space in toolbar
     //Calculate all the places, the tool box frame has a 2 px wide border all the way around.
     for (uchar i = 0; i < 6; i++) {
-        xplaces[i] = centerx - ( ( 2 - i ) * 4 ) - ( ( 2 - i ) * Global::pic_size );
-        if (i <= 2 ) {xplaces[i] -= 2;}
-        else {xplaces[i] += 2;}
+        Toolbar::button_xplaces[i] = centerx - ( ( 2 - i ) * 4 ) - ( ( 2 - i ) * Global::pic_size );
+        //if (i <= 2 ) {xplaces[i] -= 2;}
+        //else {xplaces[i] += 2;}
     }
 
-    //Create all the buttons
-    toolboxbuttons.ButtonWall.setbutton(tileWall, xplaces[0], 2);
-    toolboxbuttons.ButtonCoin.setbutton(tileCoin, xplaces[1], 2);
-    toolboxbuttons.ButtonMonster.setbutton(tileMonster, xplaces[2], 2);
-    toolboxbuttons.ButtonPlayer.setbutton(tilePlayer, xplaces[3], 2);
-    toolboxbuttons.ButtonPole.setbutton(tilePole, xplaces[4], 2);
-    toolboxbuttons.ButtonSpace.setbutton(tileSpace, xplaces[5], 2);
+    for (uchar i = 0; i < 6; i++) {
+        Toolbar::tilebuttons[i].buttontype = i;
+        Toolbar::tilebuttons[i].clip = &Textures::clips[i];
+        Toolbar::tilebuttons[i].box.w = Toolbar::tilebuttons[i].box.h = Global::pic_size;
+        Toolbar::tilebuttons[i].box.y = 2;
+        Toolbar::tilebuttons[i].box.x = Toolbar::button_xplaces[i];
+    }
+}
+/**********************************************************************************************************************************************/
+void Toolbar::draw() {
 
     //draw toolbox frame
     SDL_Rect dst;
     dst.w = dst.h = Global::pic_size + 4;
     dst.y = 0;
     for (uchar i = 0; i < 6; i++) {
-        dst.x = xplaces[i] - 2;
-        SDL_RenderCopy(Global::window.ren, Global::textures.toolboxframe, NULL, &dst);
+        dst.x = Toolbar::button_xplaces[i] - 2;
+        SDL_RenderCopy(Screen::window.ren, Textures::toolboxframe, NULL, &dst);
     }
 
     //Show all the buttons
-    toolboxbuttons.ButtonWall.show();
-    toolboxbuttons.ButtonCoin.show();
-    toolboxbuttons.ButtonMonster.show();
-    toolboxbuttons.ButtonPlayer.show();
-    toolboxbuttons.ButtonPole.show();
-    toolboxbuttons.ButtonSpace.show();
+    for (uchar i = 0; i < 6; i++) {
+        SDL_RenderCopy(Screen::window.ren, Textures::tilemap, Toolbar::tilebuttons[i].clip, &Toolbar::tilebuttons[i].box);
+        if (Toolbar::tilebuttons[i].buttontype == paintbrush.CurrentTile) {
+            SDL_RenderCopy(Screen::window.ren, Textures::toolboxframe, NULL , &Toolbar::tilebuttons[i].box);
+        }
+    }
 }
 /**********************************************************************************************************************************************/
-void check_events(SDL_Event* e) {
+void Toolbar::check_events(SDL_Event* e) {
     if ( e->type == SDL_MOUSEBUTTONDOWN) {
         //get Mouse position
         int x, y;
@@ -371,63 +358,27 @@ void check_events(SDL_Event* e) {
 
         //check all of the buttons to see if we are on that one.
 
-        SDL_Rect button;
+        for (uchar i = 0; i < 6; i++) {
+            if ( x >= Toolbar::tilebuttons[i].box.x && x <= Toolbar::tilebuttons[i].box.x + Toolbar::tilebuttons[i].box.w ) { //In the x range
+                if ( y >= Toolbar::tilebuttons[i].box.y && y <= Toolbar::tilebuttons[i].box.y + Toolbar::tilebuttons[i].box.h) { //in the y range
+                    paintbrush.CurrentTile = Toolbar::tilebuttons[i].buttontype;
+                } //end if in y
+            } // end if in x
+        } // end for buttons
 
-        button = toolboxbuttons.ButtonCoin.getPlacement();
-        if ( x >= button.x && x <= button.x + button.w ) { //In the x range
-            if ( y >= button.y && y <= button.y + button.h) { //in the y range
-                toolboxbuttons.ButtonCoin.handle_events();
-            }
-        }
-
-        button = toolboxbuttons.ButtonWall.getPlacement();
-        if ( x >= button.x && x <= button.x + button.w ) { //In the x range
-            if ( y >= button.y && y <= button.y + button.h) { //in the y range
-                toolboxbuttons.ButtonWall.handle_events();
-            }
-        }
-
-        button = toolboxbuttons.ButtonPlayer.getPlacement();
-        if ( x >= button.x && x <= button.x + button.w ) { //In the x range
-            if ( y >= button.y && y <= button.y + button.h) { //in the y range
-                toolboxbuttons.ButtonPlayer.handle_events();
-            }
-        }
-
-        button = toolboxbuttons.ButtonMonster.getPlacement();
-        if ( x >= button.x && x <= button.x + button.w ) { //In the x range
-            if ( y >= button.y && y <= button.y + button.h) { //in the y range
-                toolboxbuttons.ButtonMonster.handle_events();
-            }
-        }
-
-        button = toolboxbuttons.ButtonPole.getPlacement();
-        if ( x >= button.x && x <= button.x + button.w ) { //In the x range
-            if ( y >= button.y && y <= button.y + button.h) { //in the y range
-                toolboxbuttons.ButtonPole.handle_events();
-            }
-        }
-
-        button = toolboxbuttons.ButtonSpace.getPlacement();
-        if ( x >= button.x && x <= button.x + button.w ) { //In the x range
-            if ( y >= button.y && y <= button.y + button.h) { //in the y range
-                toolboxbuttons.ButtonSpace.handle_events();
-            }
-        }
 
         //user did not click on any buttons therefore change the map tile.
         //convert to map coordinates
-
         uint mapx, mapy;
 
         mapx = (uint) (x / Global::pic_size);
         mapy = (uint) (y / Global::pic_size);
 
-        Global::map[mapy][mapx] = Global::paintbrush.CurrentTile;
+        Global::map[mapy][mapx] = paintbrush.CurrentTile;
     }
 }
 /**********************************************************************************************************************************************/
-void write_map() {
+void Map::write_map() {
     FILE* savemap = fopen("map.sav","w");
     for (uint y = 0; y < 14; y++) {
         for (uint x = 0; x < 217; x++) {

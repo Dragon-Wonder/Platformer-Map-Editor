@@ -10,8 +10,7 @@ all: $(OBJ) $(HEAD)
 	@echo "link $(EXE)"
 	@$(CC) $(OBJ) $(CFLAGS) $(LNFLAGS) -o$(EXE)
 
-source/main.o: source/main.cpp source/version.h source/main.h source/button.h
-source/button.o: source/button.cpp source/button.h source/main.h 
+source/main.o: source/main.cpp source/version.h source/main.h
 
 clean:
 	rm -f source/*.o

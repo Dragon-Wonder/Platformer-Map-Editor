@@ -2,7 +2,7 @@
 #define __VERSION_HEADER__
 
 //Date Version Types
-#define DEFINED_VER_DATE "09"
+#define DEFINED_VER_DATE "10"
 #define DEFINED_VER_MONTH "09"
 #define DEFINED_VER_YEAR "2015"
 //I don't know what this is for, but I'll leave it for now.
@@ -10,14 +10,14 @@
 
 //Standard Version Type
 #define DEFINED_VER_MAJOR  0
-#define DEFINED_VER_MINOR  3
+#define DEFINED_VER_MINOR  4
 #define DEFINED_VER_PATCH  0
 
 //Miscellaneous Version Types
 //Don't forget to increment the build number before each build
-#define DEFINED_VER_RC_FILEVERSION 0,3,0,1
-#define DEFINED_VER_RC_FILEVERSION_STRING "0,3,0,1\0"
-#define DEFINED_VER_FULLVERSION_STRING  "0.3.0"
+#define DEFINED_VER_RC_FILEVERSION 0,4,0,2
+#define DEFINED_VER_RC_FILEVERSION_STRING "0,4,0,2\0"
+#define DEFINED_VER_FULLVERSION_STRING  "0.4.0"
 
 //Software Status
 #define DEFINED_VER_STATUS 	"Alpha"
