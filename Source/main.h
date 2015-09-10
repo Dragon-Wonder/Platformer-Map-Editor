@@ -9,13 +9,13 @@
 /**********************************************************************************************************************************************/
 #if defined(_WIN32) ||defined(_WIN64)
     #define DEFINED_DEFAULT_IMAGE_PATH ".\\Images\\"
-    #define DEFINED_MESSAGE_FONT "C:\\Windows\\Fonts\\Arial.ttf"
+    #define DEFINED_MESSAGE_FONT "C:\\Windows\\Fonts\\GARA.ttf"
 #elif defined(__unix__) || defined(__linux__)
     #define DEFINED_DEFAULT_IMAGE_PATH "./Images/"
     #define DEFINED_MESSAGE_FONT "/usr/share/fonts/truetype/freefont/FreeMono.ttf"
 #elif defined(__CYGWIN__)
     #define DEFINED_DEFAULT_IMAGE_PATH "./Images/"
-    #define DEFINED_MESSAGE_FONT "C:/Windows/Fonts/Arial.ttf"
+    #define DEFINED_MESSAGE_FONT "C:/Windows/Fonts/GARA.ttf"
 #else
     #define DEFINED_DEFAULT_IMAGE_PATH "OS NOT SUPPORTED!"
     #define DEFINED_MESSAGE_FONT "OS NOT SUPPORTED!"

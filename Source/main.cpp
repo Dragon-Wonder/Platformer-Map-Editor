@@ -477,7 +477,10 @@ void Toolbar::draw() {
 }
 /**********************************************************************************************************************************************/
 void Toolbar::check_events(SDL_Event* e) {
-    if ( e->type == SDL_MOUSEBUTTONDOWN) {
+    static bool blnButtonDown;
+    if (e->type == SDL_MOUSEBUTTONUP) {blnButtonDown = false;}
+    if ( e->type == SDL_MOUSEBUTTONDOWN || blnButtonDown) {
+        blnButtonDown = true;
         //get Mouse position
         int x, y;
         SDL_GetMouseState(&x, &y);
@@ -538,8 +541,10 @@ void Toolbar::check_events(SDL_Event* e) {
         case SDLK_q:
         case SDLK_ESCAPE:
             //change the event type to be a quit.
-            e->type = SDL_QUIT;
-            return;
+            if (Screen::promptuser(promptYesNo, "Do you really want to quit?") == 'Y') {
+                e->type = SDL_QUIT;
+                return;
+            }
             break;
 
         //Menu cases
@@ -611,10 +616,12 @@ void Map::load() {
 /**********************************************************************************************************************************************/
 void Map::newmap() {
     //New map; completely blank
-    for (uint y = 0; y < DEFINED_MAP_HEIGHT; y++) {
-        for (uint x = 0; x < DEFINED_MAP_WIDTH; x++) {
-            Global::map[y][x] = tileSpace;
-        }
-    }
+    if (Screen::promptuser(promptYesNo, "Do you really want to completely blank the map?") == 'Y') {
+        for (uint y = 0; y < DEFINED_MAP_HEIGHT; y++) {
+            for (uint x = 0; x < DEFINED_MAP_WIDTH; x++) {
+                Global::map[y][x] = tileSpace;
+            } //end for xh
+        } //end for y
+    } //end if yes
 }
 /**********************************************************************************************************************************************/

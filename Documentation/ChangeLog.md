@@ -3,6 +3,16 @@
 All notable changes to this project will be documented here.
 This project adheres to [Semantic Versioning](http://semver.org/)
 
+## [0.7.0] - 2015-09-10
+### Added
+* Dragging for editing map
+* Prompt for getting new map
+* Prompt for quitting if hitting 'Q' or ESC
+
+### Changed
+* Windows Font from Arial to Garamound
+
+
 ## [0.6.0] - 2015-09-10
 ### Added
 * Restarting of map
