@@ -1,7 +1,4 @@
 /**********************************************************************************************************************************************/
-//The main function, most of the actual program is found in Entity.cpp under start.
-//So see there for most of the functions.
-/**********************************************************************************************************************************************/
 #include "main.h"
 #include "version.h"
 /**********************************************************************************************************************************************/
@@ -49,7 +46,7 @@ int main(int argc, char *argv[]) {
     //Make all the buttons for the toolbar
     Toolbar::make_buttons();
 
-    while ( quit == false) {
+    while ( !quit ) {
         Screen::show();
         if (SDL_PollEvent( &event ) ) {
             Toolbar::check_events( &event );
@@ -59,8 +56,6 @@ int main(int argc, char *argv[]) {
 
     //Clean up the screen
     Screen::cleanup();
-	//TODO ask if should save
-    //Map::save();
 	return 0;
 }
 /**********************************************************************************************************************************************/
@@ -130,11 +125,11 @@ void Textures::load() {
     SDL_Surface* temp = IMG_ReadXPMFromArray(image_tiles_xpm);
 
     if (temp == nullptr) {
-        printf("Failed to load embedded images.\n");
+        printf("Failed to load embedded tiles.\n");
         Screen::error();
         return;
 	} else {
-	    if (Global::blnDebugMode) {printf("Error surface created.\n");}
+	    if (Global::blnDebugMode) {printf("Map tiles surface created.\n");}
     }
 
 	Textures::tilemap = SDL_CreateTextureFromSurface(Screen::window.ren,temp);
@@ -151,11 +146,11 @@ void Textures::load() {
     temp = IMG_ReadXPMFromArray(image_toolbox_frame_xpm);
 
     if (temp == nullptr) {
-        printf("Failed to load embedded images.\n");
+        printf("Failed to load embedded toolbar frame.\n");
         Screen::error();
         return;
 	} else {
-	    if (Global::blnDebugMode) {printf("Error surface created.\n");}
+	    if (Global::blnDebugMode) {printf("Toolbar surface created.\n");}
     }
 
 	Textures::toolboxframe = SDL_CreateTextureFromSurface(Screen::window.ren,temp);
@@ -172,6 +167,7 @@ void Textures::load() {
 }
 /**********************************************************************************************************************************************/
 void Screen::start() {
+/* TODO (Gamerman7799 the Scrub#1#): More Comments Required to continue window32 Folder*/
     Screen::window.width = 35 * Global::pic_size;
     Screen::window.height = 14 * Global::pic_size;
     Screen::blnload.blnMessage = Screen::blnload.blnMessageFont = Screen::blnload.blnTiles = Screen::blnload.blnToolboxFrame = false;
@@ -194,12 +190,12 @@ void Screen::start() {
     }
 
     //Start Image (with only png)
-    if (!(IMG_Init( IMG_INIT_PNG )) & IMG_INIT_PNG) {
+    /*if (!(IMG_Init( IMG_INIT_PNG )) & IMG_INIT_PNG) {
         Screen::error();
         return;
     } else {
         if (Global::blnDebugMode) {printf("IMG init successful\n");}
-    }
+    }*/
 
     Screen::window.MessageFont = TTF_OpenFont(DEFINED_MESSAGE_FONT,16); //Opens font and sets size
     if ( Screen::window.MessageFont == nullptr) {
@@ -212,15 +208,15 @@ void Screen::start() {
 
     Screen::window.win = SDL_CreateWindow("Map Maker", 100, 100, Screen::window.width, Screen::window.height, SDL_WINDOW_SHOWN);
     if (Screen::window.win == nullptr) {
-        printf("SDL Failed to create Screen::window.\n");
+        printf("SDL Failed to create window.\n");
         Screen::error();
         return;
     } else {
         Screen::blnload.blnWindow = true;
-        if (Global::blnDebugMode) {printf("Screen::window creation successful\n");}
+        if (Global::blnDebugMode) {printf("Window creation successful\n");}
     }
 
-    Screen::window.ren = SDL_CreateRenderer(Screen::window.win, -1, SDL_RENDERER_ACCELERATED);
+    Screen::window.ren = SDL_CreateRenderer(Screen::window.win, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
     if (Screen::window.ren == nullptr) {
         printf("SDL Failed to create renderer.\n");
         Screen::error();
@@ -276,7 +272,7 @@ void Screen::cleanup() {
     }
 
     TTF_Quit();
-    IMG_Quit();
+    //IMG_Quit();
     SDL_Quit();
     if (Global::blnDebugMode) {printf("SDL quit\n");}
 }
@@ -285,7 +281,7 @@ void Screen::error() {
     Screen::bln_SDL_Started = false;
     printf("SDL error: %s\n", SDL_GetError());
     printf("TTF error: %s\n", TTF_GetError());
-    printf("IMG error: %s\n", IMG_GetError());
+    //printf("IMG error: %s\n", IMG_GetError());
     getchar();
     Screen::cleanup();
 }
@@ -296,8 +292,16 @@ void Screen::show() {
     //copy sky to cover entire screen.
     SDL_RenderCopy(Screen::window.ren, Textures::tilemap, &Textures::clips[tileSpace], NULL);
     SDL_Rect dst;
-
+    dst.h = dst.w = Global::pic_size;
     //Do a few checks on the offset so we aren't accessing a non-existing part of the map array.
+/* TODO (Gamerman7799 the Scrub#1#): Get rid of modoffset and replace with just normal offset
+
+
+
+
+
+
+JUST DO IT! */
 
     if (Screen::offset.y < 0) {Screen::modoffset.y = 0;}
     else if (Screen::offset.y > (DEFINED_MAP_HEIGHT * Global::pic_size) - Screen::window.height) {Screen::modoffset.y = (DEFINED_MAP_HEIGHT * Global::pic_size) - Screen::window.height;}
@@ -312,8 +316,6 @@ void Screen::show() {
             //update where we're trying to put the texture.
             dst.x = (x * Global::pic_size) - Screen::modoffset.x;
             dst.y = (y * Global::pic_size) - Screen::modoffset.y;
-            dst.h = Global::pic_size;
-            dst.w = Global::pic_size;
 
             switch (Global::map[y][x]) { //Use this to make sure we aren't try to load a non-existing part
             case tileCoin:

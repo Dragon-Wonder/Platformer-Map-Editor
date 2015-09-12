@@ -18,7 +18,7 @@
     #define DEFINED_MESSAGE_FONT "C:/Windows/Fonts/GARA.ttf"
 #else
     #define DEFINED_DEFAULT_IMAGE_PATH "OS NOT SUPPORTED!"
-    #define DEFINED_MESSAGE_FONT "OS NOT SUPPORTED!"
+    #define DEFINED_MESSAGE_FONT "OS NOT SUPPORTED! *murloc Sound"
 #endif // defined OS
 /**********************************************************************************************************************************************/
 #define DEFINED_MAP_HEIGHT 14
@@ -27,11 +27,12 @@
 #define DEFINED_NUM_BUTN_TILES 6
 /**********************************************************************************************************************************************/
 //Ahh laziness at its finest
+//This is why Patrick, we can't have nice things
 typedef unsigned char uchar;
 typedef unsigned int uint;
 typedef unsigned long ulong;
 /**********************************************************************************************************************************************/
-struct stcLoaded { //Holds bools for if stuff is loaded or not
+struct stcLoaded { //Holds boolEANs for if stuff is loaded or not
     bool blnWindow;
     bool blnRenderer;
     bool blnTiles;
@@ -42,13 +43,13 @@ struct stcLoaded { //Holds bools for if stuff is loaded or not
 
 struct stcColors {
     SDL_Color Black;
-    SDL_Color White;
+    SDL_Color White; //Stupid code, you make me look bad
 };
 
 struct stcWindowAtt { //Window attributes
     SDL_Window *win;
     SDL_Renderer *ren;
-    TTF_Font *MessageFont;
+    TTF_Font *MessageFont; //You must build additional pylons
     uint width;
     uint height;
 };
@@ -69,7 +70,7 @@ struct stcOffset {
     int y;
 };
 
-typedef struct stcLoaded Loaded;
+typedef struct stcLoaded Loaded; //Abbreviations are OVER 9000!
 typedef struct stcColors clrs;
 typedef struct stcWindowAtt WINDATT;
 typedef struct stcPaintBrush BRUSH;
@@ -109,6 +110,7 @@ namespace Global {
 };
 /**********************************************************************************************************************************************/
 //Functions related to the screen
+/* TODO (xPUREx#7#): You must build additional classes */
 namespace Screen {
     void start(void);
     void show(void);

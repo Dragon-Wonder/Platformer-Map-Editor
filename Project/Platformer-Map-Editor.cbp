@@ -21,6 +21,7 @@
 					<Add directory="Source" />
 				</Compiler>
 				<Linker>
+					<Add option="-pg -lgmon" />
 					<Add option="-pg" />
 				</Linker>
 				<Environment>
