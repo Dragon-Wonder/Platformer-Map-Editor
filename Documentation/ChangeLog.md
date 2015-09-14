@@ -3,6 +3,17 @@
 All notable changes to this project will be documented here.
 This project adheres to [Semantic Versioning](http://semver.org/)
 
+## [0.9.0] - 2015-09-14
+### Added 
+* Menu Buttons (Save and close)
+
+### Removed
+* Lots of unneeded code
+
+## Fixed
+* Offset going off of map
+
+
 ## [0.8.0] / Version Clown - 2015-09-12
 ### Fixed
 * Several Copy Paste mistakes that weren't removed before.

@@ -25,6 +25,7 @@
 #define DEFINED_MAP_WIDTH 217
 #define DEFINED_NUM_OF_TILES 12
 #define DEFINED_NUM_BUTN_TILES 6
+#define DEFINED_NUM_BUTN_MENU 2
 /**********************************************************************************************************************************************/
 //Ahh laziness at its finest
 //This is why Patrick, we can't have nice things
@@ -43,13 +44,13 @@ struct stcLoaded { //Holds boolEANs for if stuff is loaded or not
 
 struct stcColors {
     SDL_Color Black;
-    SDL_Color White; //Stupid code, you make me look bad
+    SDL_Color White;
 };
 
 struct stcWindowAtt { //Window attributes
     SDL_Window *win;
     SDL_Renderer *ren;
-    TTF_Font *MessageFont; //You must build additional pylons
+    TTF_Font *MessageFont;
     uint width;
     uint height;
 };
@@ -70,7 +71,7 @@ struct stcOffset {
     int y;
 };
 
-typedef struct stcLoaded Loaded; //Abbreviations are OVER 9000!
+typedef struct stcLoaded Loaded;
 typedef struct stcColors clrs;
 typedef struct stcWindowAtt WINDATT;
 typedef struct stcPaintBrush BRUSH;
@@ -86,8 +87,8 @@ enum tile {
 	tileCoin, //5
 	menuFrame, //6
 	menuError, //7
-	menuSave, //8
-	menuClose, //9
+	menuClose, //8
+	menuSave, //9
 	menuLeft, //10
 	menuRight //11
 };
@@ -104,7 +105,7 @@ enum prompttype {
 };
 /**********************************************************************************************************************************************/
 namespace Global {
-	extern const bool blnDebugMode; //Holds if in debug mode or not. Causes more messages to appear in the console-
+	extern const bool blnDebugMode; //Holds if in debug mode or not. Causes more messages to appear in the console
 	extern const uint pic_size;
 	extern uchar map[DEFINED_MAP_HEIGHT][DEFINED_MAP_WIDTH];
 };
@@ -123,7 +124,6 @@ namespace Screen {
     bool bln_SDL_Started;
     WINDATT window;
     OFFST offset;
-    OFFST modoffset; //offset that has been modded slightly (is this even needed?)
 };
 
 //Functions related to the toolbar
@@ -135,6 +135,7 @@ namespace Toolbar {
     uint button_xplaces[DEFINED_NUM_BUTN_TILES];
     BRUSH paintbrush;
     BTTN tilebuttons[DEFINED_NUM_BUTN_TILES];
+    BTTN menubuttons[DEFINED_NUM_BUTN_MENU];
 };
 
 //Stuff related to the textures

@@ -167,7 +167,6 @@ void Textures::load() {
 }
 /**********************************************************************************************************************************************/
 void Screen::start() {
-/* TODO (Gamerman7799 the Scrub#1#): More Comments Required to continue window32 Folder*/
     Screen::window.width = 35 * Global::pic_size;
     Screen::window.height = 14 * Global::pic_size;
     Screen::blnload.blnMessage = Screen::blnload.blnMessageFont = Screen::blnload.blnTiles = Screen::blnload.blnToolboxFrame = false;
@@ -188,14 +187,6 @@ void Screen::start() {
     } else {
         if (Global::blnDebugMode) {printf("TTF init successful\n");}
     }
-
-    //Start Image (with only png)
-    /*if (!(IMG_Init( IMG_INIT_PNG )) & IMG_INIT_PNG) {
-        Screen::error();
-        return;
-    } else {
-        if (Global::blnDebugMode) {printf("IMG init successful\n");}
-    }*/
 
     Screen::window.MessageFont = TTF_OpenFont(DEFINED_MESSAGE_FONT,16); //Opens font and sets size
     if ( Screen::window.MessageFont == nullptr) {
@@ -272,7 +263,6 @@ void Screen::cleanup() {
     }
 
     TTF_Quit();
-    //IMG_Quit();
     SDL_Quit();
     if (Global::blnDebugMode) {printf("SDL quit\n");}
 }
@@ -281,7 +271,6 @@ void Screen::error() {
     Screen::bln_SDL_Started = false;
     printf("SDL error: %s\n", SDL_GetError());
     printf("TTF error: %s\n", TTF_GetError());
-    //printf("IMG error: %s\n", IMG_GetError());
     getchar();
     Screen::cleanup();
 }
@@ -293,29 +282,12 @@ void Screen::show() {
     SDL_RenderCopy(Screen::window.ren, Textures::tilemap, &Textures::clips[tileSpace], NULL);
     SDL_Rect dst;
     dst.h = dst.w = Global::pic_size;
-    //Do a few checks on the offset so we aren't accessing a non-existing part of the map array.
-/* TODO (Gamerman7799 the Scrub#1#): Get rid of modoffset and replace with just normal offset
-
-
-
-
-
-
-JUST DO IT! */
-
-    if (Screen::offset.y < 0) {Screen::modoffset.y = 0;}
-    else if (Screen::offset.y > (DEFINED_MAP_HEIGHT * Global::pic_size) - Screen::window.height) {Screen::modoffset.y = (DEFINED_MAP_HEIGHT * Global::pic_size) - Screen::window.height;}
-    else {Screen::modoffset.y = Screen::offset.y;}
-
-    if (Screen::offset.x < 0) {Screen::modoffset.x = 0;}
-    else if (Screen::offset.x > (DEFINED_MAP_WIDTH * Global::pic_size) - Screen::window.width) {Screen::modoffset.x = (DEFINED_MAP_WIDTH * Global::pic_size) - Screen::window.width;}
-    else {Screen::modoffset.x = Screen::offset.x;}
 
     for (uint y = 0; (y < DEFINED_MAP_HEIGHT); y++) {
         for (uint x = 0; (x < DEFINED_MAP_WIDTH); x++) {
             //update where we're trying to put the texture.
-            dst.x = (x * Global::pic_size) - Screen::modoffset.x;
-            dst.y = (y * Global::pic_size) - Screen::modoffset.y;
+            dst.x = (x * Global::pic_size) - Screen::offset.x;
+            dst.y = (y * Global::pic_size) - Screen::offset.y;
 
             switch (Global::map[y][x]) { //Use this to make sure we aren't try to load a non-existing part
             case tileCoin:
@@ -441,12 +413,10 @@ char Screen::promptuser(uchar prompttype, std::string message) {
 void Toolbar::make_buttons() {
     uint centerx; //center of the toolbox
     centerx = (uint)(Screen::window.width / 2);
-	//FIXME weird space in toolbar
     //Calculate all the places, the tool box frame has a 2 px wide border all the way around.
+    //Make tile buttons
     for (uchar i = 0; i < DEFINED_NUM_BUTN_TILES; i++) {
         Toolbar::button_xplaces[i] = centerx - ( ( 2 - i ) * 4 ) - ( ( 2 - i ) * Global::pic_size );
-        //if (i <= 2 ) {xplaces[i] -= 2;}
-        //else {xplaces[i] += 2;}
     }
 
     for (uchar i = 0; i < DEFINED_NUM_BUTN_TILES; i++) {
@@ -455,6 +425,15 @@ void Toolbar::make_buttons() {
         Toolbar::tilebuttons[i].box.w = Toolbar::tilebuttons[i].box.h = Global::pic_size;
         Toolbar::tilebuttons[i].box.y = 2;
         Toolbar::tilebuttons[i].box.x = Toolbar::button_xplaces[i];
+    }
+
+    //Make menu buttons
+    for (uchar i = 0; i < DEFINED_NUM_BUTN_MENU; i++) {
+        Toolbar::menubuttons[i].buttontype = menuClose + i;
+        Toolbar::menubuttons[i].clip = &Textures::clips[menuClose + i];
+        Toolbar::menubuttons[i].box.w = Toolbar::menubuttons[i].box.h = Global::pic_size;
+        Toolbar::menubuttons[i].box.y = 2;
+        Toolbar::menubuttons[i].box.x = (Screen::window.width - 2) - ( (i+1) * Global::pic_size);
     }
 }
 /**********************************************************************************************************************************************/
@@ -469,12 +448,19 @@ void Toolbar::draw() {
         SDL_RenderCopy(Screen::window.ren, Textures::toolboxframe, NULL, &dst);
     }
 
-    //Show all the buttons
+    //Show all the tile buttons
     for (uchar i = 0; i < DEFINED_NUM_BUTN_TILES; i++) {
         SDL_RenderCopy(Screen::window.ren, Textures::tilemap, Toolbar::tilebuttons[i].clip, &Toolbar::tilebuttons[i].box);
         if (Toolbar::tilebuttons[i].buttontype == paintbrush.CurrentTile) {
             SDL_RenderCopy(Screen::window.ren, Textures::tilemap, &Textures::clips[menuFrame] , &Toolbar::tilebuttons[i].box);
         }
+    }
+
+    //show all the menu buttons
+    for (uchar i = 0; i < DEFINED_NUM_BUTN_MENU; i++) {
+        //dst.x = (Screen::window.width - 2) - ( (i+1) * Global::pic_size);
+        //SDL_RenderCopy(Screen::window.ren, Textures::toolboxframe, NULL, &dst);
+        SDL_RenderCopy(Screen::window.ren, Textures::tilemap, Toolbar::menubuttons[i].clip, &Toolbar::menubuttons[i].box);
     }
 }
 /**********************************************************************************************************************************************/
@@ -487,8 +473,7 @@ void Toolbar::check_events(SDL_Event* e) {
         int x, y;
         SDL_GetMouseState(&x, &y);
 
-        //check all of the buttons to see if we are on that one.
-
+        //check all of the tile buttons to see if we are on that one.
         for (uchar i = 0; i < DEFINED_NUM_BUTN_TILES; i++) {
             if ( x >= Toolbar::tilebuttons[i].box.x && x <= Toolbar::tilebuttons[i].box.x + Toolbar::tilebuttons[i].box.w ) { //In the x range
                 if ( y >= Toolbar::tilebuttons[i].box.y && y <= Toolbar::tilebuttons[i].box.y + Toolbar::tilebuttons[i].box.h) { //in the y range
@@ -497,13 +482,31 @@ void Toolbar::check_events(SDL_Event* e) {
             } // end if in x
         } // end for buttons
 
+        //check all of the menu buttons
+        for (uchar i = 0; i < DEFINED_NUM_BUTN_MENU; i++) {
+            if ( x >= Toolbar::menubuttons[i].box.x && x <= Toolbar::menubuttons[i].box.x + Toolbar::menubuttons[i].box.w ) { //In the x range
+                if ( y >= Toolbar::menubuttons[i].box.y && y <= Toolbar::menubuttons[i].box.y + Toolbar::menubuttons[i].box.h) { //in the y range
+                    blnButtonDown = false;
+                    switch (Toolbar::menubuttons[i].buttontype) {
+                    case menuSave:
+                        Map::save();
+                        break;
+                    case menuClose:
+                        if (Screen::promptuser(promptYesNo, "Do you really want to quit?") == 'Y') {
+                            e->type = SDL_QUIT;
+                        } //end if yes
+                        break;
+                    } //end switch
+                } //end if in y
+            } // end if in x
+        } //end for menu buttons
+
 
         //user did not click on any buttons therefore change the map tile.
         //convert to map coordinates
         uint mapx, mapy;
-        /* TODO (GamerMan7799#1#): Add drag ability */
-        mapx = (uint) ( (x + Screen::modoffset.x) / Global::pic_size);
-        mapy = (uint) ( (y + Screen::modoffset.y) / Global::pic_size);
+        mapx = (uint) ( (x + Screen::offset.x) / Global::pic_size);
+        mapy = (uint) ( (y + Screen::offset.y) / Global::pic_size);
 
         Global::map[mapy][mapx] = paintbrush.CurrentTile;
     } else if (e->type == SDL_KEYDOWN) {
@@ -513,18 +516,22 @@ void Toolbar::check_events(SDL_Event* e) {
         case SDLK_UP:
         case SDLK_w:
             Screen::offset.y -= Global::pic_size;
+            if (Screen::offset.y < 0) {Screen::offset.y = 0;}
             break;
         case SDLK_DOWN:
         case SDLK_s:
             Screen::offset.y += Global::pic_size;
+            if (Screen::offset.y > (DEFINED_MAP_HEIGHT * Global::pic_size) - Screen::window.height) {Screen::offset.y = (DEFINED_MAP_HEIGHT * Global::pic_size) - Screen::window.height;}
             break;
         case SDLK_RIGHT:
         case SDLK_d:
             Screen::offset.x += Global::pic_size;
+            if (Screen::offset.x > (DEFINED_MAP_WIDTH * Global::pic_size) - Screen::window.width) {Screen::offset.x = (DEFINED_MAP_WIDTH * Global::pic_size) - Screen::window.width;}
             break;
         case SDLK_LEFT:
         case SDLK_a:
             Screen::offset.x -= Global::pic_size;
+            if (Screen::offset.x < 0) {Screen::offset.x = 0;}
             break;
         case SDLK_HOME:
             Screen::offset.x = Screen::offset.y = 0;
@@ -559,6 +566,7 @@ void Toolbar::check_events(SDL_Event* e) {
         case SDLK_l:
             Map::load();
             break;
+
         //Switch tile
         case SDLK_1:
             Toolbar::paintbrush.CurrentTile = tileSpace;
@@ -622,7 +630,7 @@ void Map::newmap() {
         for (uint y = 0; y < DEFINED_MAP_HEIGHT; y++) {
             for (uint x = 0; x < DEFINED_MAP_WIDTH; x++) {
                 Global::map[y][x] = tileSpace;
-            } //end for xh
+            } //end for x
         } //end for y
     } //end if yes
 }
