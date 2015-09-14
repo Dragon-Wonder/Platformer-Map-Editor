@@ -3,6 +3,22 @@
 All notable changes to this project will be documented here.
 This project adheres to [Semantic Versioning](http://semver.org/)
 
+## [0.8.0] / Version Clown - 2015-09-12
+### Fixed
+* Several Copy Paste mistakes that weren't removed before.
+
+### Removed
+* Cleaned up some code that didn't make that much sense
+* Some unneeded comments
+
+### Added
+* Additional Todos
+
+### Notes
+* I was going through the code with xPUREx to bring him up to speed on this project and this version is mostly
+ the mistakes we found while going through it.
+
+
 ## [0.7.0] - 2015-09-10
 ### Added
 * Dragging for editing map
@@ -10,7 +26,7 @@ This project adheres to [Semantic Versioning](http://semver.org/)
 * Prompt for quitting if hitting 'Q' or ESC
 
 ### Changed
-* Windows Font from Arial to Garamound
+* Windows Font from Arial to Garamond
 
 
 ## [0.6.0] - 2015-09-10
@@ -67,4 +83,4 @@ This project adheres to [Semantic Versioning](http://semver.org/)
 
 ## [0.1.0] - 2015-09-08
 ### Notes
-* Inital
+* Initial

@@ -47,21 +47,30 @@
 *.layout
 *.depend
 
-# My stuff
+# Copies of the embedded images in png form
 /Images/
 /Images/*
+
+# Map save
 *.sav
 
 # Archived images that don't need to be on Github
 *.zip
 *.rar
+*.gz
+*.7z
+*.ace
+
 
 # I'll name files this if I don't want them on Github
 *.tmp
 
 # I store my SDL2 include and lib here
+/SDL2Stuff/
+/SDL2Stuff/*
 /SDL2Stuff/include/
 /SDL2Stuff/lib/
+*
 
 # Random stuff that also doesn't need to be on github
 /RandomCrap/
