@@ -17,6 +17,7 @@
 					<Add option="-Wall" />
 					<Add option="-pg" />
 					<Add option="-g" />
+					<Add option="-Wno-write-strings" />
 					<Add option="-DDEFINED_BUILD_MODE_PRIVATE" />
 					<Add directory="Source" />
 				</Compiler>

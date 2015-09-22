@@ -2,26 +2,26 @@
 #define __VERSION_HEADER__
 
 //Date Version Types
-#define DEFINED_VER_DATE "14"
+#define DEFINED_VER_DATE "22"
 #define DEFINED_VER_MONTH "09"
 #define DEFINED_VER_YEAR "2015"
 //I don't know what this is for, but I'll leave it for now.
 #define DEFINED_VER_UBUNTU_VERSION_STYLE  "15.09"
 
 //Standard Version Type
-#define DEFINED_VER_MAJOR  0
-#define DEFINED_VER_MINOR  9
+#define DEFINED_VER_MAJOR  1
+#define DEFINED_VER_MINOR  0
 #define DEFINED_VER_PATCH  0
 
 //Miscellaneous Version Types
 //Don't forget to increment the build number before each build
-#define DEFINED_VER_RC_FILEVERSION 0,9,0,7
-#define DEFINED_VER_RC_FILEVERSION_STRING "0,9,0,7\0"
-#define DEFINED_VER_FULLVERSION_STRING  "0.9.0"
+#define DEFINED_VER_RC_FILEVERSION 1,0,0,5
+#define DEFINED_VER_RC_FILEVERSION_STRING "1,0,0,5\0"
+#define DEFINED_VER_FULLVERSION_STRING  "1.0.0"
 
 //Software Status
-#define DEFINED_VER_STATUS 	"Alpha"
-#define DEFINED_VER_STATUS_SHORT  "a"
+#define DEFINED_VER_STATUS 	"Beta"
+#define DEFINED_VER_STATUS_SHORT  "b"
 
 /*
 Software Status can be the following:

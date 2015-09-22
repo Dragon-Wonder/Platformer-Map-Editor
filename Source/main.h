@@ -4,6 +4,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
+#include <cstring>
 #include <string>
 #include <cstdio>
 /**********************************************************************************************************************************************/
@@ -23,12 +24,11 @@
 /**********************************************************************************************************************************************/
 #define DEFINED_MAP_HEIGHT 14
 #define DEFINED_MAP_WIDTH 217
-#define DEFINED_NUM_OF_TILES 12
-#define DEFINED_NUM_BUTN_TILES 6
+#define DEFINED_NUM_OF_TILES 16
+#define DEFINED_NUM_BUTN_TILES 10
 #define DEFINED_NUM_BUTN_MENU 2
 /**********************************************************************************************************************************************/
 //Ahh laziness at its finest
-//This is why Patrick, we can't have nice things
 typedef unsigned char uchar;
 typedef unsigned int uint;
 typedef unsigned long ulong;
@@ -79,18 +79,22 @@ typedef struct stcButton BTTN;
 typedef struct stcOffset OFFST;
 /**********************************************************************************************************************************************/
 enum tile {
-	tileSpace = 0,
-	tileWall, //1
-	tilePlayer, //2
-	tilePole, //3
-	tileMonster, //4
-	tileCoin, //5
-	menuFrame, //6
-	menuError, //7
-	menuClose, //8
-	menuSave, //9
-	menuLeft, //10
-	menuRight //11
+	tileSpace = 0x0,
+	tileBricksLarge = 0x1,
+	tilePlayer = 0x2,
+	tilePole = 0x3,
+	tileMonster = 0x4,
+	tileCoin = 0x5,
+	tileBricksSmall = 0x6,
+	tileBricksGray = 0x7,
+	tileBricksGreen = 0x8,
+	tileBricksOrange = 0x9,
+	menuFrame = 0xA,
+	menuError = 0xB,
+	menuClose = 0xC,
+	menuSave = 0xD,
+	menuLeft = 0xE,
+	menuRight = 0xF
 };
 
 enum tools {
@@ -142,6 +146,7 @@ namespace Toolbar {
 namespace Textures {
     void load(void);
     void set_clips(void);
+    SDL_Texture* makeTransparent(SDL_Surface* , Uint32 );
 
     SDL_Texture *tilemap;
     SDL_Texture *texmessage;

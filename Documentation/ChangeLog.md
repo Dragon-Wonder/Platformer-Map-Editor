@@ -3,6 +3,28 @@
 All notable changes to this project will be documented here.
 This project adheres to [Semantic Versioning](http://semver.org/)
 
+## [1.0.0] - 2015-09-22
+### Added
+* More Brick Textures (5 in total now) to add more variety to the map, and to allow easier transition into a different tile set in the future.
+* Map loading
+* Wno-write-strings to debug build to stop annoying messages about the xpm files.
+
+### Changed
+* Map tiles now saved in hexadecimal (no change to save yet as there are only 10 tiles but when we add more we don't have to worry about this.)
+* Map tiles to be switched with Keys 0 - 9
+* Made Save function simpler
+* Program tells you save was successful
+
+### Removed
+* Sky tile being placed as the sky, now uses SDL_SetRenderDrawColor (really doesn't change anything but whatever)
+
+### Fixed
+* Tried to fix certain Textures not being properly transparent (doesn't appear to be working at the moment)
+
+### Cleaned
+* Code to make things simpler
+
+
 ## [0.9.0] - 2015-09-14
 ### Added 
 * Menu Buttons (Save and close)

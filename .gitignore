@@ -50,6 +50,12 @@
 # Copies of the embedded images in png form
 /Images/
 /Images/*
+*.png
+Tiles.png
+\Images\
+\Images\*
+Images\
+Images\*
 
 # Map save
 *.sav
@@ -70,7 +76,7 @@
 /SDL2Stuff/*
 /SDL2Stuff/include/
 /SDL2Stuff/lib/
-*
+
 
 # Random stuff that also doesn't need to be on github
 /RandomCrap/
@@ -79,3 +85,5 @@
 # Other Libraries (such as libjpeg-9) that I store the dll & license files here in case I decide to use them later.
 /OtherLibraries/
 /OtherLibraries/*
+*.png
+Images/Readme.md
