@@ -1,11 +1,15 @@
-/**********************************************************************************************************************************************/
+/*****************************************************************************/
 #include "main.h"
 #include "version.h"
-/**********************************************************************************************************************************************/
+/*****************************************************************************/
+/////////////////////////////////////////////////
+/// @file main.cpp
+/// @brief  This is the main file that holds all of the code.
+/////////////////////////////////////////////////
+/*****************************************************************************/
 #include "image_tiles.xpm"
 #include "image_toolbox_frame.xpm"
-/**********************************************************************************************************************************************/
-//Globals (in all files)
+/*****************************************************************************/
 namespace Global {
     //Holds if in debug mode or not. Causes more messages to appear in the console.
     //Defined in version.h
@@ -31,8 +35,17 @@ namespace Global {
                         {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}};
 
 };
-/**********************************************************************************************************************************************/
+/*****************************************************************************/
 int main(int argc, char *argv[]) {
+    /////////////////////////////////////////////////
+    /// @brief The main function. Holds the loop that keeps SDL running.
+    ///
+    /// @param argc = something required by SDL.
+    /// @param argv = something required by SDL.
+    /// @return 1 for error during run, 0 for run successful.
+    ///
+    /////////////////////////////////////////////////
+
     bool quit = false;
     SDL_Event event;
 	//TODO allow setting of map size
@@ -41,7 +54,7 @@ int main(int argc, char *argv[]) {
     Textures::set_clips();
     Screen::start();
     //quits the program if there was an error starting SDL, its components or in getting the textures we need.
-    if (Screen::bln_SDL_Started == false) {return 1;}
+    if ( !Screen::bln_SDL_Started ) {return 1;}
     //Make all the buttons for the toolbar
     Toolbar::make_buttons();
 
@@ -57,27 +70,32 @@ int main(int argc, char *argv[]) {
     Screen::cleanup();
 	return 0;
 }
-/**********************************************************************************************************************************************/
+/*****************************************************************************/
 void Textures::set_clips() {
+    /////////////////////////////////////////////////
+    /// @brief Sets all the clip locations of the different tiles.
+    ///    The Picture Coordinates (x,y)
+    ///    we multiply this by the pic size to get the clip
+    ///    +-----+-----+-----+-----+
+    ///    |(0,0)|(1,0)|(2,0)|(3,0)|
+    ///    +-----+-----+-----+-----+
+    ///    |(0,1)|(1,1)|(2,1)|(3,1)|
+    ///    +-----+-----+-----+-----+
+    ///    |(0,2)|(1,2)|(2,2)|(3,2)|
+    ///    +-----+-----+-----+-----+
+    ///    |(0,3)|(1,3)|(2,3)|(3,3)|
+    ///    +-----+-----+-----+-----+
+    ///
+    /// @return void
+    ///
+    /////////////////////////////////////////////////
+
     //Sets all the location of tiles in the main tile.png
 
     //since all of the sizes are the same size we will do this all together to save space
     for (uchar i = 0; i < DEFINED_NUM_OF_TILES; i++) {
         Textures::clips[i].w = Textures::clips[i].h = Global::pic_size;
     }
-
-/*     The Picture Coordinates (x,y)
- *     we multiply this by the pic size to get the clip
- *     +-----+-----+-----+-----+
- *     |(0,0)|(1,0)|(2,0)|(3,0)|
- *     +-----+-----+-----+-----+
- *     |(0,1)|(1,1)|(2,1)|(3,1)|
- *     +-----+-----+-----+-----+
- *     |(0,2)|(1,2)|(2,2)|(3,2)|
- *     +-----+-----+-----+-----+
- *     |(0,3)|(1,3)|(2,3)|(3,3)|
- *     +-----+-----+-----+-----+
- */
 
     //First row, Coin, Monster, Player, Frame
     Textures::clips[tileCoin].x = 0 * Global::pic_size;
@@ -134,13 +152,18 @@ void Textures::set_clips() {
 
     if (Global::blnDebugMode) {printf("Clips made.\n");}
 }
-/**********************************************************************************************************************************************/
+/*****************************************************************************/
 void Textures::load() {
+    /////////////////////////////////////////////////
+    /// @brief Loads all of the different textures needed into memory.
+    /////////////////////////////////////////////////
+
     //Load tiles
 
     SDL_Surface* temp = IMG_ReadXPMFromArray(image_tiles_xpm); //load array
     //Color to be replaced with transparent
-    Uint32 colorKey = SDL_MapRGB( SDL_GetWindowSurface( Screen::window.win )->format, 0x00, 0xFF, 0x00);
+    Uint32 colorKey = SDL_MapRGB( SDL_GetWindowSurface( Screen::window.win )->
+                                                    format, 0x00, 0xFF, 0x00);
 
     //For the maptiles we have to do some additional work to convert all the whitespace into transparent pixels
 	Textures::tilemap = temp == nullptr ? nullptr : Textures::makeTransparent(temp, colorKey);
@@ -156,7 +179,8 @@ void Textures::load() {
 
     //Load toolbox frame
     temp = IMG_ReadXPMFromArray(image_toolbox_frame_xpm);
-	Textures::toolboxframe =  (temp == nullptr) ? nullptr : SDL_CreateTextureFromSurface(Screen::window.ren,temp);
+	Textures::toolboxframe =  (temp == nullptr) ? nullptr :
+                    SDL_CreateTextureFromSurface(Screen::window.ren,temp);
 	if (Textures::toolboxframe == nullptr) {
         printf("Failed to create texture.\n");
         Screen::error();
@@ -168,10 +192,20 @@ void Textures::load() {
 
     SDL_FreeSurface(temp);
 }
-/**********************************************************************************************************************************************/
+/*****************************************************************************/
 SDL_Texture* Textures::makeTransparent(SDL_Surface* surface, Uint32 colorKey) {
-    //converting pixels of a texture to transparent is better explained
-    // here: http://lazyfoo.net/tutorials/SDL/40_texture_manipulation/index.php
+    /////////////////////////////////////////////////
+    /// @brief Was an attempt to try to fix an error with the toolbox frame texture.
+    ///        The frame was not appearing transparent as it is supposed to be.
+    ///        Used a tutorial found [here](http://lazyfoo.net/tutorials/SDL/40_texture_manipulation/index.php)
+    ///        Doesn't work as of right now.
+    ///
+    /// @param surface = Pointer to the surface we want to make transparent.
+    /// @param colorKey = The color we want to make transparent.
+    /// @return Pointer to the texture.
+    ///
+    /////////////////////////////////////////////////
+
     int mPitch = 0;
     void* mPixels = nullptr;
 
@@ -179,7 +213,8 @@ SDL_Texture* Textures::makeTransparent(SDL_Surface* surface, Uint32 colorKey) {
 
     SDL_Texture* tex;
     //Convert the surface to a formatted one.
-    SDL_Surface* formattedSurface = SDL_ConvertSurface( surface, SDL_GetWindowSurface( Screen::window.win )->format, NULL );
+    SDL_Surface* formattedSurface = SDL_ConvertSurface( surface,
+                                    SDL_GetWindowSurface( Screen::window.win )->format, NULL );
     if (formattedSurface == nullptr) {return nullptr;}
     //Create texture from formatted Surface
     tex = SDL_CreateTexture( Screen::window.ren, SDL_GetWindowPixelFormat( Screen::window.win ),
@@ -190,13 +225,15 @@ SDL_Texture* Textures::makeTransparent(SDL_Surface* surface, Uint32 colorKey) {
     SDL_LockTexture( tex, NULL, &mPixels, &mPitch );
 
     //Copy loaded/formatted surface pixels
-    std::memcpy( mPixels, formattedSurface->pixels, formattedSurface->pitch * formattedSurface->h);
+    std::memcpy( mPixels, formattedSurface->pixels,
+                            formattedSurface->pitch * formattedSurface->h);
 
     Uint32* pixels = (Uint32*)mPixels;
     int pixelCount = ( mPitch / 4 ) * formattedSurface->h;
 
     // Transparent / what will replace color above
-    Uint32 transparent = SDL_MapRGBA( SDL_GetWindowSurface( Screen::window.win )->format, 0xFF, 0xFF, 0xFF, 0x00 );
+    Uint32 transparent = SDL_MapRGBA( SDL_GetWindowSurface( Screen::window.win )->
+                                     format, 0xFF, 0xFF, 0xFF, 0x00 );
 
     //change pixel if it is the same as color key
     for (int i = 0; i < pixelCount; i++) {
@@ -209,11 +246,16 @@ SDL_Texture* Textures::makeTransparent(SDL_Surface* surface, Uint32 colorKey) {
     SDL_UnlockTexture( tex );
     return tex;
 }
-/**********************************************************************************************************************************************/
+/*****************************************************************************/
 void Screen::start() {
+    /////////////////////////////////////////////////
+    /// @brief Starts the screen, SDL and all of the components we need it to.
+    /////////////////////////////////////////////////
+
     Screen::window.width = 35 * Global::pic_size;
     Screen::window.height = 14 * Global::pic_size;
-    Screen::blnload.blnMessage = Screen::blnload.blnMessageFont = Screen::blnload.blnTiles = Screen::blnload.blnToolboxFrame = false;
+    Screen::blnload.blnMessage = Screen::blnload.blnMessageFont =
+            Screen::blnload.blnTiles = Screen::blnload.blnToolboxFrame = false;
     Screen::blnload.blnWindow = Screen::blnload.blnRenderer = Screen::bln_SDL_Started = false;
 
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
@@ -251,7 +293,8 @@ void Screen::start() {
        Screen::blnload.blnMessageFont = true;
     }
 
-    Screen::window.win = SDL_CreateWindow("Map Maker", 100, 100, Screen::window.width, Screen::window.height, SDL_WINDOW_SHOWN);
+    Screen::window.win = SDL_CreateWindow("Map Maker", 100, 100,
+                                    Screen::window.width, Screen::window.height, SDL_WINDOW_SHOWN);
     if (Screen::window.win == nullptr) {
         printf("SDL Failed to create window.\n");
         Screen::error();
@@ -261,7 +304,8 @@ void Screen::start() {
         if (Global::blnDebugMode) {printf("Window creation successful\n");}
     }
 
-    Screen::window.ren = SDL_CreateRenderer(Screen::window.win, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+    Screen::window.ren = SDL_CreateRenderer(Screen::window.win, -1,
+                                    SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
     if (Screen::window.ren == nullptr) {
         printf("SDL Failed to create renderer.\n");
         Screen::error();
@@ -278,11 +322,15 @@ void Screen::start() {
     if (!Screen::bln_SDL_Started) {return;}
 
     Screen::colors.Black = {0x0, 0x0, 0x0, 0xFF};
-    //This causes an error for some reason.
-    //Screen::colors.White = (0xFF, 0xFF, 0xFF, 0xFF);
+    Screen::colors.White = {0xFF, 0xFF, 0xFF, 0xFF};
 }
-/**********************************************************************************************************************************************/
+/*****************************************************************************/
 void Screen::cleanup() {
+    /////////////////////////////////////////////////
+    /// @brief Cleans up all the items in memory by first checking if it exists
+    ///        and deleting it if it does.
+    /////////////////////////////////////////////////
+
     if (Screen::blnload.blnMessage) {
         SDL_DestroyTexture(Textures::texmessage);
         Screen::blnload.blnMessage = false;
@@ -324,20 +372,30 @@ void Screen::cleanup() {
     IMG_Quit();
     if (Global::blnDebugMode) {printf("SDL quit\n");}
 }
-/**********************************************************************************************************************************************/
+/*****************************************************************************/
 void Screen::error() {
+    /////////////////////////////////////////////////
+    /// @brief Is called when there is an error. Sets Screen::bln_SDL_Started to false,
+    ///        prints the error to the screen and then calls cleanup.
+    /////////////////////////////////////////////////
+
     Screen::bln_SDL_Started = false;
     printf("SDL error: %s\n", SDL_GetError());
     printf("TTF error: %s\n", TTF_GetError());
     getchar();
     Screen::cleanup();
 }
-/**********************************************************************************************************************************************/
+/*****************************************************************************/
 void Screen::show() {
+    /////////////////////////////////////////////////
+    /// @brief Updates the renderer with new tile placements.
+    /////////////////////////////////////////////////
+
     //Clear renderer
     SDL_RenderClear(Screen::window.ren);
     //copy sky to cover entire screen.
-    SDL_RenderCopy(Screen::window.ren, Textures::tilemap, &Textures::clips[tileSpace], NULL);
+    SDL_RenderCopy(Screen::window.ren, Textures::tilemap,
+                   &Textures::clips[tileSpace], NULL);
     SDL_Rect dst;
     dst.h = dst.w = Global::pic_size;
 
@@ -358,10 +416,12 @@ void Screen::show() {
             case tileBricksGreen:
             case tileBricksOrange:
             case tileBricksSmall:
-                SDL_RenderCopy(Screen::window.ren, Textures::tilemap, &Textures::clips[Global::map[y][x]], &dst);
+                SDL_RenderCopy(Screen::window.ren, Textures::tilemap,
+                               &Textures::clips[Global::map[y][x]], &dst);
                 break;
             default:
-                SDL_RenderCopy(Screen::window.ren, Textures::tilemap, &Textures::clips[menuError], &dst);
+                SDL_RenderCopy(Screen::window.ren, Textures::tilemap,
+                               &Textures::clips[menuError], &dst);
                 break;
             } //end switch
         } //end for x
@@ -370,15 +430,25 @@ void Screen::show() {
     Toolbar::draw();
     SDL_RenderPresent(Screen::window.ren);
 }
-/**********************************************************************************************************************************************/
+/*****************************************************************************/
 char Screen::promptuser(uchar prompttype, std::string message) {
+    /////////////////////////////////////////////////
+    /// @brief Prompts the user for some information.
+    ///
+    /// @param propmttype = What prompt to the user, Yes/No or an Okay.
+    /// @param message = The message that appears above the prompt.
+    /// @return What key is pressed by the user.
+    ///
+    /////////////////////////////////////////////////
+
     //Prompt the user for something, prompt the user for something.
     //returns what they say.
 
     //Clear the Renderer
     SDL_RenderClear(Screen::window.ren);
 
-    SDL_Surface* surmessage = TTF_RenderText_Solid(Screen::window.MessageFont, message.c_str(), Screen::colors.Black);
+    SDL_Surface* surmessage = TTF_RenderText_Solid(Screen::window.MessageFont,
+                                        message.c_str(), Screen::colors.Black);
     if (surmessage == nullptr) {
             Screen::error();
             return 'F';
@@ -414,7 +484,8 @@ char Screen::promptuser(uchar prompttype, std::string message) {
         break;
     }
 
-    surmessage = TTF_RenderText_Solid(Screen::window.MessageFont, message2.c_str(), Screen::colors.Black);
+    surmessage = TTF_RenderText_Solid(Screen::window.MessageFont,
+                                message2.c_str(), Screen::colors.Black);
     if (surmessage == nullptr) {
             Screen::error();
             return 'F';
@@ -468,8 +539,12 @@ char Screen::promptuser(uchar prompttype, std::string message) {
     } while (blnStopLoop == false);
     return keyPress;
 }
-/**********************************************************************************************************************************************/
+/*****************************************************************************/
 void Toolbar::make_buttons() {
+    /////////////////////////////////////////////////
+    /// @brief Makes all the buttons for the toolbar.
+    /////////////////////////////////////////////////
+
     uint centerx; //center of the toolbox
     centerx = (uint)(Screen::window.width / 2);
     //Calculate all the places, the tool box frame has a 2 px wide border all the way around.
@@ -496,8 +571,12 @@ void Toolbar::make_buttons() {
         Toolbar::menubuttons[i].box.x = (Screen::window.width - 2) - ( (i+1) * Global::pic_size);
     }
 }
-/**********************************************************************************************************************************************/
+/*****************************************************************************/
 void Toolbar::draw() {
+    /////////////////////////////////////////////////
+    /// @brief Draws the toolbar.
+    /////////////////////////////////////////////////
+
 
     //draw toolbox frame
     SDL_Rect dst;
@@ -510,19 +589,27 @@ void Toolbar::draw() {
 
     //Show all the tile buttons
     for (uchar i = 0; i < DEFINED_NUM_BUTN_TILES; i++) {
-        SDL_RenderCopy(Screen::window.ren, Textures::tilemap, Toolbar::tilebuttons[i].clip, &Toolbar::tilebuttons[i].box);
+        SDL_RenderCopy(Screen::window.ren, Textures::tilemap,
+                       Toolbar::tilebuttons[i].clip, &Toolbar::tilebuttons[i].box);
         if (Toolbar::tilebuttons[i].buttontype == paintbrush.CurrentTile) {
-            SDL_RenderCopy(Screen::window.ren, Textures::tilemap, &Textures::clips[menuFrame] , &Toolbar::tilebuttons[i].box);
+            SDL_RenderCopy(Screen::window.ren, Textures::tilemap,
+                           &Textures::clips[menuFrame] , &Toolbar::tilebuttons[i].box);
         }
     }
 
     //show all the menu buttons
     for (uchar i = 0; i < DEFINED_NUM_BUTN_MENU; i++) {
-        SDL_RenderCopy(Screen::window.ren, Textures::tilemap, Toolbar::menubuttons[i].clip, &Toolbar::menubuttons[i].box);
+        SDL_RenderCopy(Screen::window.ren, Textures::tilemap,
+                       Toolbar::menubuttons[i].clip, &Toolbar::menubuttons[i].box);
     }
 }
-/**********************************************************************************************************************************************/
+/*****************************************************************************/
 void Toolbar::check_events(SDL_Event* e) {
+    /////////////////////////////////////////////////
+    /// @brief Checks an SDL event to see what the program should do.
+    /// @param e = Pointer to the event that happened.
+    /////////////////////////////////////////////////
+
     static bool blnButtonDown;
     if (e->type == SDL_MOUSEBUTTONUP) {blnButtonDown = false;}
     if ( e->type == SDL_MOUSEBUTTONDOWN || blnButtonDown) {
@@ -533,8 +620,10 @@ void Toolbar::check_events(SDL_Event* e) {
 
         //check all of the tile buttons to see if we are on that one.
         for (uchar i = 0; i < DEFINED_NUM_BUTN_TILES; i++) {
-            if ( x >= Toolbar::tilebuttons[i].box.x && x <= Toolbar::tilebuttons[i].box.x + Toolbar::tilebuttons[i].box.w ) { //In the x range
-                if ( y >= Toolbar::tilebuttons[i].box.y && y <= Toolbar::tilebuttons[i].box.y + Toolbar::tilebuttons[i].box.h) { //in the y range
+            if ( x >= Toolbar::tilebuttons[i].box.x && x <=
+                            Toolbar::tilebuttons[i].box.x + Toolbar::tilebuttons[i].box.w ) { //In the x range
+                if ( y >= Toolbar::tilebuttons[i].box.y && y <=
+                            Toolbar::tilebuttons[i].box.y + Toolbar::tilebuttons[i].box.h) { //in the y range
                     paintbrush.CurrentTile = Toolbar::tilebuttons[i].buttontype;
                 } //end if in y
             } // end if in x
@@ -542,8 +631,10 @@ void Toolbar::check_events(SDL_Event* e) {
 
         //check all of the menu buttons
         for (uchar i = 0; i < DEFINED_NUM_BUTN_MENU; i++) {
-            if ( x >= Toolbar::menubuttons[i].box.x && x <= Toolbar::menubuttons[i].box.x + Toolbar::menubuttons[i].box.w ) { //In the x range
-                if ( y >= Toolbar::menubuttons[i].box.y && y <= Toolbar::menubuttons[i].box.y + Toolbar::menubuttons[i].box.h) { //in the y range
+            if ( x >= Toolbar::menubuttons[i].box.x && x <=
+                        Toolbar::menubuttons[i].box.x + Toolbar::menubuttons[i].box.w ) { //In the x range
+                if ( y >= Toolbar::menubuttons[i].box.y && y <=
+                        Toolbar::menubuttons[i].box.y + Toolbar::menubuttons[i].box.h) { //in the y range
                     blnButtonDown = false;
                     switch (Toolbar::menubuttons[i].buttontype) {
                     case menuSave:
@@ -579,12 +670,14 @@ void Toolbar::check_events(SDL_Event* e) {
         case SDLK_DOWN:
         case SDLK_s:
             Screen::offset.y += Global::pic_size;
-            if (Screen::offset.y > (DEFINED_MAP_HEIGHT * Global::pic_size) - Screen::window.height) {Screen::offset.y = (DEFINED_MAP_HEIGHT * Global::pic_size) - Screen::window.height;}
+            if (Screen::offset.y > (DEFINED_MAP_HEIGHT * Global::pic_size) - Screen::window.height)
+                {Screen::offset.y = (DEFINED_MAP_HEIGHT * Global::pic_size) - Screen::window.height;}
             break;
         case SDLK_RIGHT:
         case SDLK_d:
             Screen::offset.x += Global::pic_size;
-            if (Screen::offset.x > (DEFINED_MAP_WIDTH * Global::pic_size) - Screen::window.width) {Screen::offset.x = (DEFINED_MAP_WIDTH * Global::pic_size) - Screen::window.width;}
+            if (Screen::offset.x > (DEFINED_MAP_WIDTH * Global::pic_size) - Screen::window.width)
+                {Screen::offset.x = (DEFINED_MAP_WIDTH * Global::pic_size) - Screen::window.width;}
             break;
         case SDLK_LEFT:
         case SDLK_a:
@@ -659,8 +752,12 @@ void Toolbar::check_events(SDL_Event* e) {
         } //end switch
     } //end if event type
 }
-/**********************************************************************************************************************************************/
+/*****************************************************************************/
 void Map::save() {
+    /////////////////////////////////////////////////
+    /// @brief Saves the map to map.sav.
+    /////////////////////////////////////////////////
+
     FILE* savemap;
     savemap = fopen("map.sav", "r");
     char Answer;
@@ -683,8 +780,12 @@ void Map::save() {
     } //end if map save
     fclose(savemap);
 }
-/**********************************************************************************************************************************************/
+/*****************************************************************************/
 void Map::load() {
+    /////////////////////////////////////////////////
+    /// @brief Loads the map from map.sav.
+    /////////////////////////////////////////////////
+
     if (Screen::promptuser(promptYesNo, "Do you want to load old map? All progress will be lost.") == 'Y' ){
         FILE* mapload = fopen("map.sav", "r");
         if (mapload == NULL) {Screen::promptuser(promptOkay, "Saved map could not be found!"); return;}
@@ -695,8 +796,12 @@ void Map::load() {
         } //end for y
     } //end if yes
 }
-/**********************************************************************************************************************************************/
+/*****************************************************************************/
 void Map::newmap() {
+    /////////////////////////////////////////////////
+    /// @brief Fills all of the map with spaces.
+    /////////////////////////////////////////////////
+
     //New map; completely blank
     if (Screen::promptuser(promptYesNo, "Do you really want to completely blank the map?") == 'Y') {
         for (uint y = 0; y < DEFINED_MAP_HEIGHT; y++) {
@@ -706,4 +811,4 @@ void Map::newmap() {
         } //end for y
     } //end if yes
 }
-/**********************************************************************************************************************************************/
+/*****************************************************************************/

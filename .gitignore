@@ -77,6 +77,9 @@ Images\*
 /SDL2Stuff/include/
 /SDL2Stuff/lib/
 
+# HTML Doxygen File
+/html/
+html/
 
 # Random stuff that also doesn't need to be on github
 /RandomCrap/

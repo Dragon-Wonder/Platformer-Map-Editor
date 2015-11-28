@@ -3,6 +3,15 @@
 All notable changes to this project will be documented here.
 This project adheres to [Semantic Versioning](http://semver.org/)
 
+## [1.1.0] - 2015-11-28
+### Added
+* Doxygen Support
+
+### Changed
+* All line seprators from 170 charaters long to 80 to allow me to see if I am breaking Google's recommended 80 charaters length 
+	see [here] (https://google-styleguide.googlecode.com/svn/trunk/cppguide.html#Line_Length)
+
+
 ## [1.0.0] - 2015-09-22
 ### Added
 * More Brick Textures (5 in total now) to add more variety to the map, and to allow easier transition into a different tile set in the future.
