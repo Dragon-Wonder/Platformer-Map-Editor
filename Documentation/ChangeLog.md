@@ -3,6 +3,11 @@
 All notable changes to this project will be documented here.
 This project adheres to [Semantic Versioning](http://semver.org/)
 
+## [1.1.1] - 2017-03-16
+### Notes
+* Updated version number
+
+
 ## [1.1.0] - 2015-11-28
 ### Added
 * Doxygen Support
