@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This is a map editor / maker that is meant to be used with my other project the experimental platformer Ai which you can find [here] (https://github.com/GamerMan7799/Experimental-Platformer-AI)
+This is a map editor / maker that is meant to be used with my other project the experimental platformer Ai which you can find [here](https://github.com/GamerMan7799/Experimental-Platformer-AI)
 
 ## License and copyright
 
