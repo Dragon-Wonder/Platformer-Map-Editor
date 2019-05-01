@@ -1,4 +1,8 @@
-# Platformer Map Editor
+# Platformer Map Editor - ACHIEVED
+
+## Status
+
+This project is achieved and will no longer be updated. The code has been merged into [Experimental-Platformer-Ai](https://github.com/GamerMan7799/Experimental-Platformer-AI), the program this one was built for, starting with version 6.0.0.
 
 ## Introduction
 
@@ -8,7 +12,7 @@ This is a map editor / maker that is meant to be used with my other project the 
 
 All of this project was written from scratch by [GamerMan7799] (https://github.com/GamerMan7799) & [xPUREx](https://github.com/xPUREx) unless otherwise noted.
 
-That being said all parts of this project we own have been released to the Public Domain. (This does not apply to parts that were noted as being someone else's). 
+That being said all parts of this project we own have been released to the Public Domain. (This does not apply to parts that were noted as being someone else's).
 
 As such you may use any and/or all of this project however you wish; Commercially or not; modify it or not. You do not even have to give credit (though we would greatly appreciate it if you did).
 
@@ -21,13 +25,13 @@ Please read these licenses before you decide to distribute any copies of this pr
 
 We are pretty novice programmers at best. Part of the reason we made this was to improve our skills. And part of the reason we made it open source is to get feedback.
 
-We are always open to people contributing to the project by giving suggestions, or helping us with improvements. 
+We are always open to people contributing to the project by giving suggestions, or helping us with improvements.
 
 ## Building the Project
 
 ### SDL Library
 
-In order to run the program properly you will need to download SDL2-2.0.3 or higher. 
+In order to run the program properly you will need to download SDL2-2.0.3 or higher.
 You will also need SDL2 TTF library, and SDL2 Images library
 
 A link for SDL2 can be found [here] (https://www.libsdl.org/download-2.0.php).
@@ -58,14 +62,14 @@ FolderName\libpng16-16.dll
 ### Windows
 
 You can download the .exe under the Releases Tab you will need the SDL2 runtime binaries (see above).
-	
+
 ### Linux
 
 You should be able to use the Makefile to compile the program. You will also need the SDL library which you can use by enter the following code into your terminal, or downloading from the link above.
 
 Ubuntu, Mint, or Debian
 
-``` 
+```
 sudo apt-get install libsdl2-dev
 sudo apt-get install libsdl2-ttf-dev
 sudo apt-get install libsdl2-image-dev
@@ -89,16 +93,10 @@ HOME or END will take you to the start or end of the map
 
 Page Up and Page down will move you one screen's width at a time.
 
-You can use the number keys (1-6) to switch your tile for painting. (You can also just click on the tile). 
+You can use the number keys (1-6) to switch your tile for painting. (You can also just click on the tile).
 
 Q, ESC, or Hitting the X on the window will close the program.
 
 N will wipe the map (you will be promted)
 
 V to save the map (you will be prompted if one already exists)
-
-
-
-
-
-
