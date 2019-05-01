@@ -1,8 +1,8 @@
-# Platformer Map Editor - ACHIEVED
+# Platformer Map Editor - ARCHIVED
 
 ## Status
 
-This project is achieved and will no longer be updated. The code has been merged into [Experimental-Platformer-Ai](https://github.com/GamerMan7799/Experimental-Platformer-AI), the program this one was built for, starting with version 6.0.0.
+This project is archive and will no longer be updated. The code has been merged into [Experimental-Platformer-Ai](https://github.com/GamerMan7799/Experimental-Platformer-AI), the program this one was built for, starting with version 6.0.0.
 
 ## Introduction
 
